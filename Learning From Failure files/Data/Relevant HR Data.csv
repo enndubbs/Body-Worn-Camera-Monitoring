@@ -1,0 +1,864 @@
+Employee_ID,HR_Job_Type,HR_Location,Hire_Date,Termination_Date
+9001851,Correctional,Epsilon,2014-06-16,2019-04-01
+9003663,Correctional,Epsilon,2018-03-15,2019-04-01
+9002446,Correctional,Beta,2013-08-01,2019-04-02
+9003348,Correctional,Epsilon,2017-07-17,2019-04-03
+9003392,Correctional,Epsilon,2017-09-01,2019-04-04
+9004018,Correctional,Beta,2019-01-01,2019-04-10
+9002795,Correctional,Epsilon,2015-07-01,2019-04-15
+9003582,Correctional,Beta,2018-01-01,2019-04-19
+9003255,Correctional,Beta,2017-03-01,2019-04-24
+9003972,Correctional,Epsilon,2018-11-01,2019-04-24
+9001005,Correctional,Epsilon,2011-01-12,NA
+9001007,Correctional,Gamma,2014-06-01,NA
+9001011,Correctional Supervisor,Epsilon,2011-01-12,NA
+9001014,Correctional,Epsilon,2011-01-12,NA
+9001018,Correctional,Delta,2011-01-12,NA
+9001019,Correctional,Gamma,2011-01-12,NA
+9001023,Correctional,Epsilon,2011-01-12,NA
+9001031,Correctional,Alpha,2018-11-01,NA
+9001038,Correctional,Epsilon,2015-05-01,NA
+9001039,Correctional,Beta,2011-01-12,NA
+9001042,Correctional,Epsilon,2011-01-12,NA
+9001044,Correctional,Epsilon,2011-01-12,NA
+9001046,Correctional,Epsilon,2011-01-12,NA
+9001050,Correctional,Epsilon,2011-01-12,NA
+9001052,Correctional,Epsilon,2011-01-12,NA
+9001057,Correctional Supervisor,Epsilon,2016-04-01,NA
+9001061,Correctional,Beta,2011-01-12,NA
+9001070,Correctional,Beta,2011-01-12,NA
+9001076,Correctional,Delta,2011-01-12,NA
+9001077,Correctional,Beta,2011-01-12,NA
+9001085,Correctional,Gamma,2016-07-01,NA
+9001088,Correctional Supervisor,Delta,2014-08-01,NA
+9001094,Correctional,Epsilon,2011-01-12,NA
+9001095,Correctional,Epsilon,2011-01-12,NA
+9001098,Correctional Supervisor,Gamma,2011-01-12,NA
+9001101,Correctional,Delta,2013-06-01,NA
+9001106,Correctional,Alpha,2015-12-01,NA
+9001107,Correctional,Gamma,2016-06-01,NA
+9001110,Correctional Supervisor,Gamma,2011-01-12,NA
+9001121,Correctional,Delta,2011-01-12,NA
+9001124,Correctional,Delta,2011-01-12,NA
+9001135,Correctional Supervisor,Epsilon,2011-01-12,NA
+9001137,Correctional,Alpha,2014-11-01,NA
+9001141,Correctional,Alpha,2011-01-12,NA
+9001159,Correctional,Epsilon,2011-01-12,NA
+9001164,Correctional Supervisor,Delta,2011-01-12,NA
+9001165,Correctional,Epsilon,2011-01-12,NA
+9001171,Correctional,Epsilon,2011-01-12,NA
+9001175,Correctional Supervisor,Epsilon,2011-01-12,NA
+9001182,Correctional,Alpha,2011-01-12,NA
+9001190,Correctional,Alpha,2011-01-12,NA
+9001191,Correctional,Alpha,2011-01-12,NA
+9001194,Correctional,Alpha,2011-01-12,NA
+9001197,Correctional,Beta,2015-07-15,NA
+9001203,Correctional,Delta,2011-01-12,NA
+9001205,Correctional,Delta,2017-05-01,NA
+9001210,Correctional,Gamma,2011-01-12,NA
+9001212,Correctional,Epsilon,2011-01-12,NA
+9001213,Correctional,Delta,2011-01-12,NA
+9001214,Correctional,Gamma,2011-01-12,NA
+9001215,Correctional,Gamma,2011-01-12,NA
+9001218,Correctional,Delta,2011-01-12,NA
+9001220,Correctional Supervisor,Delta,2011-01-12,NA
+9001221,Correctional,Gamma,2011-01-12,NA
+9001222,Correctional,Gamma,2011-01-12,NA
+9001226,Correctional,Gamma,2011-01-12,NA
+9001227,Correctional,Gamma,2015-02-01,NA
+9001230,Correctional,Gamma,2011-01-12,NA
+9001231,Correctional,Gamma,2012-07-01,NA
+9001233,Correctional,Gamma,2011-01-12,NA
+9001234,Correctional Supervisor,Gamma,2012-10-01,NA
+9001238,Correctional,Gamma,2011-01-12,NA
+9001240,Correctional,Gamma,2011-01-12,NA
+9001241,Correctional,Gamma,2011-01-12,NA
+9001243,Correctional,Gamma,2018-10-01,NA
+9001247,Correctional Supervisor,Delta,2011-01-12,NA
+9001249,Correctional,Gamma,2016-03-01,NA
+9001252,Correctional,Gamma,2011-01-12,NA
+9001255,Correctional,Epsilon,2011-01-12,NA
+9001258,Correctional,Alpha,2011-01-12,NA
+9001259,Correctional Supervisor,Delta,2011-01-12,NA
+9001266,Correctional,Delta,2011-01-12,NA
+9001269,Correctional,Epsilon,2011-01-12,NA
+9001277,Correctional,Epsilon,2012-02-01,NA
+9001278,Correctional Supervisor,Delta,2011-01-12,NA
+9001285,Correctional,Delta,2011-01-12,NA
+9001292,Correctional Supervisor,Delta,2011-01-12,NA
+9001294,Correctional,Delta,2011-01-12,NA
+9001295,Correctional,Beta,2011-01-12,NA
+9001300,Correctional Supervisor,Delta,2014-07-01,NA
+9001304,Correctional,Gamma,2017-03-01,NA
+9001305,Correctional Supervisor,Delta,2014-01-15,NA
+9001308,Correctional,Beta,2011-01-12,NA
+9001309,Correctional,Gamma,2011-01-12,NA
+9001311,Correctional Supervisor,Delta,2011-01-12,NA
+9001312,Correctional Supervisor,Epsilon,2014-07-15,NA
+9001328,Correctional,Epsilon,2011-01-12,NA
+9001330,Correctional Supervisor,Beta,2012-01-17,NA
+9001331,Correctional Supervisor,Gamma,2011-01-12,NA
+9001343,Correctional,Epsilon,2011-01-12,NA
+9001345,Correctional,Gamma,2011-01-12,NA
+9001352,Correctional,Gamma,2014-12-15,NA
+9001358,Correctional,Delta,2011-01-12,NA
+9001360,Correctional,Delta,2011-01-12,NA
+9001367,Correctional,Delta,2011-01-12,NA
+9001370,Correctional,Beta,2011-01-12,NA
+9001382,Correctional,Delta,2013-04-01,NA
+9001384,Correctional Supervisor,Delta,2011-01-12,NA
+9001386,Correctional Supervisor,Gamma,2014-06-01,NA
+9001388,Correctional,Alpha,2011-01-12,NA
+9001389,Correctional Supervisor,Delta,2011-01-12,NA
+9001390,Correctional Supervisor,Delta,2011-01-12,NA
+9001391,Correctional,Epsilon,2011-01-12,NA
+9001393,Correctional,Epsilon,2011-01-12,NA
+9001394,Correctional,Epsilon,2011-01-12,NA
+9001395,Correctional,Delta,2011-01-12,NA
+9001398,Correctional,Delta,2011-01-12,NA
+9001401,Correctional,Alpha,2011-01-12,NA
+9001414,Correctional Supervisor,Epsilon,2011-01-12,NA
+9001415,Correctional Supervisor,Epsilon,2015-04-01,NA
+9001417,Correctional,Delta,2011-01-12,NA
+9001421,Correctional,Epsilon,2011-01-12,NA
+9001422,Correctional,Epsilon,2011-01-12,NA
+9001425,Correctional,Delta,2011-01-12,NA
+9001433,Correctional Supervisor,Epsilon,2011-01-12,NA
+9001436,Correctional Supervisor,Delta,2011-01-12,NA
+9001446,Correctional Supervisor,Epsilon,2017-11-15,NA
+9001456,Correctional,Delta,2015-03-01,NA
+9001463,Correctional,Epsilon,2014-02-01,NA
+9001464,Correctional,Epsilon,2011-01-12,NA
+9001465,Correctional,Delta,2011-01-12,NA
+9001467,Correctional,Gamma,2011-01-12,NA
+9001468,Correctional,Delta,2011-01-12,NA
+9001470,Correctional,Beta,2017-09-01,NA
+9001480,Correctional,Epsilon,2014-12-01,NA
+9001481,Correctional,Delta,2011-01-12,NA
+9001483,Correctional,Delta,2014-05-15,NA
+9001485,Correctional,Epsilon,2011-01-12,NA
+9001486,Correctional,Delta,2011-01-12,NA
+9001487,Correctional,Delta,2011-01-12,NA
+9001489,Correctional,Delta,2011-01-12,NA
+9001495,Correctional,Beta,2012-12-17,NA
+9001496,Correctional,Gamma,2014-10-15,NA
+9001497,Correctional,Epsilon,2011-01-12,NA
+9001501,Correctional,Beta,2011-01-12,NA
+9001509,Correctional,Gamma,2016-02-01,NA
+9001516,Correctional,Epsilon,2015-05-15,NA
+9001517,Correctional,Gamma,2011-01-12,NA
+9001522,Correctional,Delta,2011-01-12,NA
+9001533,Correctional,Delta,2011-01-12,NA
+9001535,Correctional,Epsilon,2011-01-12,NA
+9001536,Correctional,Beta,2011-01-12,NA
+9001537,Correctional,Delta,2011-01-12,NA
+9001539,Correctional,Epsilon,2015-11-01,NA
+9001540,Correctional,Delta,2011-01-12,NA
+9001542,Correctional,Delta,2011-01-12,NA
+9001544,Correctional,Epsilon,2016-04-15,NA
+9001547,Correctional,Epsilon,2011-01-12,NA
+9001552,Correctional,Beta,2011-01-12,NA
+9001560,Correctional,Delta,2011-01-12,NA
+9001562,Correctional,Epsilon,2016-03-01,NA
+9001567,Correctional,Delta,2011-01-12,NA
+9001574,Correctional,Epsilon,2012-03-15,NA
+9001575,Correctional Supervisor,Delta,2011-01-12,NA
+9001576,Correctional,Alpha,2015-12-01,NA
+9001577,Correctional,Epsilon,2011-01-12,NA
+9001582,Correctional Supervisor,Alpha,2011-01-12,NA
+9001585,Correctional,Epsilon,2011-01-12,NA
+9001592,Correctional,Delta,2011-01-12,NA
+9001593,Correctional,Beta,2011-01-12,NA
+9001594,Correctional,Gamma,2011-01-12,NA
+9001601,Correctional,Beta,2011-01-12,NA
+9001602,Correctional Supervisor,Beta,2016-11-01,NA
+9001603,Correctional Supervisor,Epsilon,2011-01-12,NA
+9001605,Correctional,Epsilon,2011-01-12,NA
+9001607,Correctional,Epsilon,2011-01-12,NA
+9001610,Correctional,Epsilon,2011-01-12,NA
+9001612,Correctional,Epsilon,2011-01-12,NA
+9001618,Correctional,Alpha,2011-01-12,NA
+9001621,Correctional,Alpha,2011-01-12,NA
+9001623,Correctional,Delta,2011-01-12,NA
+9001624,Correctional,Alpha,2011-01-12,NA
+9001625,Correctional Supervisor,Delta,2011-01-12,NA
+9001628,Correctional,Delta,2011-01-12,NA
+9001630,Correctional,Alpha,2011-01-12,NA
+9001631,Correctional Supervisor,Alpha,2013-11-15,NA
+9001634,Correctional,Gamma,2011-01-12,NA
+9001635,Correctional,Delta,2011-01-12,NA
+9001652,Correctional Supervisor,Epsilon,2011-01-12,NA
+9001653,Correctional Supervisor,Beta,2011-01-12,NA
+9001654,Correctional Supervisor,Gamma,2011-01-12,NA
+9001655,Correctional,Delta,2011-01-12,NA
+9001660,Correctional,Delta,2012-05-15,NA
+9001665,Correctional,Alpha,2011-01-12,NA
+9001666,Correctional Supervisor,Beta,2017-03-01,NA
+9001667,Correctional,Epsilon,2011-01-12,NA
+9001668,Correctional,Alpha,2011-01-12,NA
+9001673,Correctional,Epsilon,2011-01-12,NA
+9001675,Correctional,Gamma,2017-08-01,NA
+9001680,Correctional,Alpha,2011-01-12,NA
+9001683,Correctional,Epsilon,2011-01-12,NA
+9001688,Correctional,Epsilon,2014-02-01,NA
+9001689,Correctional,Delta,2011-01-12,NA
+9001690,Correctional,Delta,2011-01-12,NA
+9001692,Correctional,Gamma,2011-01-12,NA
+9001693,Correctional,Delta,2011-01-12,NA
+9001696,Correctional Supervisor,Epsilon,2011-01-12,NA
+9001698,Correctional,Epsilon,2011-01-12,NA
+9001700,Correctional,Gamma,2011-01-12,NA
+9001702,Correctional,Gamma,2011-01-12,NA
+9001703,Correctional,Delta,2012-12-01,NA
+9001707,Correctional,Gamma,2011-01-12,NA
+9001709,Correctional,Beta,2011-01-12,NA
+9001710,Correctional Supervisor,Delta,2011-01-12,NA
+9001712,Correctional,Delta,2011-01-12,NA
+9001717,Correctional,Gamma,2011-01-12,NA
+9001718,Correctional,Delta,2016-07-01,NA
+9001719,Correctional,Delta,2011-01-12,NA
+9001722,Correctional,Delta,2011-01-12,NA
+9001724,Correctional,Delta,2011-01-12,NA
+9001726,Correctional,Gamma,2011-01-12,NA
+9001735,Correctional,Epsilon,2011-01-12,NA
+9001736,Correctional,Delta,2011-01-12,NA
+9001739,Correctional,Delta,2017-01-01,NA
+9001743,Correctional,Delta,2011-01-12,NA
+9001746,Correctional,Gamma,2011-01-12,NA
+9001747,Correctional Supervisor,Alpha,2011-01-12,NA
+9001753,Correctional,Beta,2018-01-01,NA
+9001755,Correctional,Gamma,2011-01-12,NA
+9001756,Correctional,Epsilon,2014-01-15,NA
+9001758,Correctional,Delta,2011-01-12,NA
+9001759,Correctional,Alpha,2011-01-12,NA
+9001760,Correctional,Delta,2011-01-12,NA
+9001761,Correctional,Epsilon,2011-01-12,NA
+9001762,Correctional Supervisor,Alpha,2011-01-12,NA
+9001763,Correctional,Epsilon,2011-01-12,NA
+9001765,Correctional,Gamma,2011-01-12,NA
+9001768,Correctional,Delta,2011-01-12,NA
+9001769,Correctional Supervisor,Delta,2011-01-12,NA
+9001770,Correctional,Alpha,2011-01-12,NA
+9001771,Correctional Supervisor,Epsilon,2011-01-12,NA
+9001774,Correctional,Delta,2011-01-12,NA
+9001775,Correctional Supervisor,Delta,2011-01-12,NA
+9001776,Correctional,Gamma,2018-10-01,NA
+9001777,Correctional,Epsilon,2017-02-01,NA
+9001778,Correctional,Delta,2011-01-12,NA
+9001780,Correctional,Epsilon,2011-01-12,NA
+9001783,Correctional,Delta,2014-12-01,NA
+9001785,Correctional,Delta,2011-01-12,NA
+9001786,Correctional,Gamma,2015-01-15,NA
+9001789,Correctional,Delta,2011-01-12,NA
+9001797,Correctional,Delta,2011-01-12,NA
+9001802,Correctional,Epsilon,2012-05-01,NA
+9001805,Correctional,Epsilon,2011-01-12,NA
+9001807,Correctional,Alpha,2011-01-12,NA
+9001808,Correctional,Beta,2011-01-12,NA
+9001810,Correctional,Epsilon,2015-06-15,NA
+9001812,Correctional,Gamma,2011-01-12,NA
+9001814,Correctional,Epsilon,2011-01-12,NA
+9001815,Correctional,Epsilon,2011-01-12,NA
+9001818,Correctional,Gamma,2011-01-12,NA
+9001820,Correctional Supervisor,Delta,2015-03-16,NA
+9001821,Correctional,Delta,2011-01-12,NA
+9001823,Correctional,Delta,2011-01-12,NA
+9001825,Correctional,Epsilon,2011-01-12,NA
+9001827,Correctional,Alpha,2011-01-12,NA
+9001834,Correctional,Delta,2011-01-12,NA
+9001836,Correctional,Epsilon,2011-01-12,NA
+9001837,Correctional,Beta,2012-06-01,NA
+9001842,Correctional,Alpha,2011-01-12,NA
+9001845,Correctional Supervisor,Gamma,2011-01-12,NA
+9001846,Correctional,Delta,2011-01-12,NA
+9001848,Correctional,Gamma,2011-01-12,NA
+9001853,Correctional,Alpha,2007-06-15,NA
+9001856,Correctional,Delta,2017-10-16,NA
+9001868,Correctional,Epsilon,2011-01-12,NA
+9001871,Correctional Supervisor,Beta,2011-01-12,NA
+9001884,Correctional,Epsilon,2011-01-12,NA
+9001887,Correctional,Beta,2011-01-12,NA
+9001890,Correctional,Beta,2011-01-12,NA
+9001892,Correctional,Delta,2011-01-12,NA
+9001895,Correctional,Epsilon,2011-01-12,NA
+9001898,Correctional,Epsilon,2011-01-12,NA
+9001901,Correctional Supervisor,Delta,2011-01-12,NA
+9001904,Correctional,Beta,2011-01-12,NA
+9001908,Correctional,Gamma,2013-03-01,NA
+9001909,Correctional,Epsilon,2011-01-12,NA
+9001910,Correctional,Gamma,2011-01-12,NA
+9001915,Correctional Supervisor,Beta,2018-04-16,NA
+9001918,Correctional,Epsilon,2011-01-12,NA
+9001921,Correctional,Delta,2011-01-12,NA
+9001923,Correctional,Gamma,2018-11-01,NA
+9001925,Correctional,Gamma,2011-01-12,NA
+9001926,Correctional,Alpha,2011-01-12,NA
+9001927,Correctional,Alpha,2011-01-12,NA
+9001928,Correctional,Alpha,2011-01-12,NA
+9001932,Correctional,Alpha,2011-01-12,NA
+9001933,Correctional Supervisor,Gamma,2011-01-12,NA
+9001934,Correctional,Epsilon,2011-01-12,NA
+9001936,Correctional,Delta,2011-01-12,NA
+9001947,Correctional,Gamma,2011-01-12,NA
+9001948,Correctional Supervisor,Gamma,2011-01-12,NA
+9001953,Correctional,Delta,2014-11-17,NA
+9001954,Correctional,Gamma,2015-11-01,NA
+9001958,Correctional,Beta,2011-01-12,NA
+9001961,Correctional,Epsilon,2011-01-12,NA
+9001962,Correctional,Alpha,2011-01-12,NA
+9001964,Correctional,Gamma,2011-01-12,NA
+9001965,Correctional Supervisor,Epsilon,2008-06-09,NA
+9001981,Correctional,Gamma,2011-01-12,NA
+9001986,Correctional,Epsilon,2015-01-01,NA
+9001988,Correctional,Epsilon,2011-01-12,NA
+9001991,Correctional,Beta,2011-01-12,NA
+9001992,Correctional,Epsilon,2011-01-12,NA
+9001996,Correctional,Alpha,2011-01-12,NA
+9001997,Correctional,Gamma,2011-01-12,NA
+9001999,Correctional,Gamma,2011-01-12,NA
+9002000,Correctional,Gamma,2011-01-12,NA
+9002002,Correctional,Delta,2011-01-12,NA
+9002006,Correctional,Gamma,2017-02-01,NA
+9002010,Correctional,Beta,2011-01-12,NA
+9002011,Correctional,Delta,2011-01-12,NA
+9002013,Correctional,Gamma,2011-01-12,NA
+9002017,Correctional,Epsilon,2011-01-12,NA
+9002018,Correctional,Gamma,2011-01-12,NA
+9002019,Correctional,Gamma,2015-07-15,NA
+9002020,Correctional,Gamma,2011-01-12,NA
+9002021,Correctional,Gamma,2011-01-12,NA
+9002023,Correctional,Epsilon,2017-11-01,NA
+9002028,Correctional,Gamma,2011-01-12,NA
+9002030,Correctional,Epsilon,2011-01-12,NA
+9002036,Correctional,Delta,2011-01-12,NA
+9002037,Correctional,Gamma,2011-01-12,NA
+9002041,Correctional,Gamma,2011-01-12,NA
+9002044,Correctional,Beta,2013-08-15,NA
+9002047,Correctional,Delta,2014-07-15,NA
+9002048,Correctional,Delta,2011-01-12,NA
+9002049,Correctional,Delta,2011-01-12,NA
+9002050,Correctional,Gamma,2014-04-01,NA
+9002051,Correctional,Beta,2011-01-12,NA
+9002052,Correctional,Beta,2015-09-01,NA
+9002054,Correctional,Delta,2016-05-01,NA
+9002055,Correctional,Beta,2011-01-12,NA
+9002056,Correctional,Delta,2016-02-01,NA
+9002057,Correctional,Beta,2011-01-12,NA
+9002061,Correctional,Alpha,2011-01-12,NA
+9002062,Correctional,Alpha,2011-01-12,NA
+9002063,Correctional,Beta,2011-01-12,NA
+9002069,Correctional,Beta,2011-01-12,NA
+9002070,Correctional,Gamma,2013-11-01,NA
+9002073,Correctional Supervisor,Beta,2011-01-12,NA
+9002085,Correctional Supervisor,Gamma,2011-01-12,NA
+9002089,Correctional Supervisor,Beta,2011-01-12,NA
+9002099,Correctional,Gamma,2011-01-12,NA
+9002101,Correctional,Delta,2017-02-01,NA
+9002108,Correctional,Epsilon,2012-04-01,NA
+9002109,Correctional,Gamma,2013-09-01,NA
+9002115,Correctional,Epsilon,2011-01-12,NA
+9002128,Correctional,Gamma,2016-05-01,NA
+9002133,Correctional,Beta,2011-01-12,NA
+9002136,Correctional,Gamma,2011-01-12,NA
+9002137,Correctional,Gamma,2016-06-01,NA
+9002138,Correctional,Gamma,2017-04-01,NA
+9002139,Correctional,Delta,2011-01-12,NA
+9002140,Correctional,Delta,2011-01-12,NA
+9002143,Correctional,Delta,2011-01-12,NA
+9002148,Correctional,Beta,2011-01-12,NA
+9002149,Correctional,Delta,2016-02-01,NA
+9002156,Correctional Supervisor,Epsilon,2011-01-12,NA
+9002158,Correctional,Alpha,2011-01-12,NA
+9002165,Correctional,Gamma,2011-01-12,NA
+9002170,Correctional,Alpha,2011-01-12,NA
+9002172,Correctional,Gamma,2011-01-12,NA
+9002173,Correctional,Beta,2011-01-12,NA
+9002174,Correctional Supervisor,Gamma,2015-05-15,NA
+9002175,Correctional Supervisor,Epsilon,2011-01-12,NA
+9002176,Correctional,Delta,2011-01-12,NA
+9002177,Correctional,Beta,2011-01-12,NA
+9002179,Correctional Supervisor,Epsilon,2011-01-12,NA
+9002182,Correctional,Beta,2013-07-15,NA
+9002184,Correctional,Beta,2013-03-15,NA
+9002187,Correctional,Beta,2011-01-12,NA
+9002189,Correctional,Gamma,2011-01-12,NA
+9002191,Correctional,Gamma,2012-10-15,NA
+9002192,Correctional,Gamma,2011-01-12,NA
+9002193,Correctional,Gamma,2018-04-01,NA
+9002195,Correctional,Alpha,2011-01-12,NA
+9002196,Correctional Supervisor,Alpha,2011-01-12,NA
+9002197,Correctional Supervisor,Alpha,2011-01-12,NA
+9002198,Correctional,Alpha,2011-01-12,NA
+9002199,Correctional,Gamma,2011-01-12,NA
+9002200,Correctional,Gamma,2016-07-01,NA
+9002205,Correctional,Gamma,2011-01-12,NA
+9002211,Correctional,Alpha,2011-01-12,NA
+9002236,Correctional,Beta,2011-01-12,NA
+9002238,Correctional,Beta,2012-01-01,NA
+9002242,Correctional,Gamma,2012-01-17,NA
+9002245,Correctional,Delta,2012-01-17,NA
+9002247,Correctional,Delta,2012-01-17,NA
+9002248,Correctional Supervisor,Delta,2012-02-01,NA
+9002249,Correctional,Alpha,2012-02-01,NA
+9002250,Correctional,Delta,2012-02-01,NA
+9002251,Correctional Supervisor,Gamma,2015-05-15,NA
+9002253,Correctional,Beta,2012-02-15,NA
+9002257,Correctional,Beta,2012-03-01,NA
+9002261,Correctional,Alpha,2013-02-01,NA
+9002262,Correctional,Alpha,2012-03-01,NA
+9002264,Correctional,Gamma,2012-03-01,NA
+9002266,Correctional,Gamma,2012-03-15,NA
+9002267,Correctional,Epsilon,2012-04-01,NA
+9002268,Correctional Supervisor,Epsilon,2012-04-01,NA
+9002270,Correctional,Epsilon,2012-04-01,NA
+9002273,Correctional,Alpha,2012-04-01,NA
+9002275,Correctional,Alpha,2012-04-01,NA
+9002279,Correctional,Gamma,2016-02-01,NA
+9002280,Correctional,Delta,2012-04-16,NA
+9002283,Correctional,Delta,2012-05-01,NA
+9002284,Correctional,Epsilon,2012-05-01,NA
+9002295,Correctional,Alpha,2012-06-01,NA
+9002304,Correctional,Epsilon,2012-07-01,NA
+9002306,Correctional,Delta,2012-07-01,NA
+9002315,Correctional,Gamma,2012-07-16,NA
+9002316,Correctional,Epsilon,2012-08-01,NA
+9002320,Correctional,Gamma,2014-08-01,NA
+9002321,Correctional,Alpha,2012-08-01,NA
+9002328,Correctional,Delta,2012-09-01,NA
+9002329,Correctional,Gamma,2012-09-01,NA
+9002333,Correctional Supervisor,Beta,2012-09-01,NA
+9002334,Correctional,Gamma,2012-09-01,NA
+9002335,Correctional,Gamma,2014-08-01,NA
+9002337,Correctional Supervisor,Alpha,2015-12-01,NA
+9002345,Correctional,Delta,2012-10-01,NA
+9002347,Correctional,Alpha,2017-04-01,NA
+9002349,Correctional,Alpha,2012-10-01,NA
+9002356,Correctional,Delta,2012-11-01,NA
+9002363,Correctional,Gamma,2018-12-01,NA
+9002364,Correctional Supervisor,Gamma,2012-11-01,NA
+9002365,Correctional,Epsilon,2012-11-01,NA
+9002369,Correctional,Delta,2016-08-01,NA
+9002370,Correctional,Alpha,2012-11-15,NA
+9002371,Correctional,Alpha,2012-11-15,NA
+9002374,Correctional,Epsilon,2012-12-01,NA
+9002377,Correctional,Gamma,2012-12-01,NA
+9002378,Correctional,Beta,2012-12-17,NA
+9002380,Correctional,Epsilon,2014-10-15,NA
+9002388,Correctional,Delta,2013-01-01,NA
+9002393,Correctional Supervisor,Alpha,2013-02-01,NA
+9002396,Correctional,Gamma,2013-02-15,NA
+9002399,Correctional,Alpha,2013-03-01,NA
+9002400,Correctional,Alpha,2013-03-01,NA
+9002403,Correctional,Beta,2013-03-15,NA
+9002410,Correctional,Alpha,2013-04-01,NA
+9002419,Correctional,Alpha,2013-05-01,NA
+9002423,Correctional,Beta,2013-06-01,NA
+9002431,Correctional,Beta,2013-07-01,NA
+9002432,Correctional,Beta,2013-07-01,NA
+9002434,Correctional,Gamma,2013-07-01,NA
+9002436,Correctional Supervisor,Beta,2013-07-01,NA
+9002439,Correctional,Beta,2013-07-15,NA
+9002440,Correctional,Gamma,2013-07-15,NA
+9002441,Correctional,Gamma,2013-07-15,NA
+9002443,Correctional,Epsilon,2013-08-01,NA
+9002444,Correctional,Epsilon,2013-08-01,NA
+9002445,Correctional,Beta,2013-08-01,NA
+9002447,Correctional,Beta,2013-08-01,NA
+9002448,Correctional,Delta,2013-08-01,NA
+9002450,Correctional,Gamma,2013-08-15,NA
+9002454,Correctional,Epsilon,2013-09-01,NA
+9002457,Correctional,Beta,2013-09-01,NA
+9002458,Correctional,Beta,2013-09-01,NA
+9002461,Correctional,Gamma,2013-09-01,NA
+9002462,Correctional,Gamma,2013-09-01,NA
+9002463,Correctional,Gamma,2013-09-01,NA
+9002465,Correctional,Gamma,2013-09-01,NA
+9002466,Correctional,Beta,2013-09-16,NA
+9002467,Correctional Supervisor,Gamma,2013-09-16,NA
+9002468,Correctional Supervisor,Epsilon,2018-08-01,NA
+9002471,Correctional,Gamma,2013-10-01,NA
+9002473,Correctional,Epsilon,2013-10-15,NA
+9002476,Correctional,Gamma,2013-10-15,NA
+9002480,Correctional,Gamma,2013-11-01,NA
+9002481,Correctional,Alpha,2013-11-01,NA
+9002489,Correctional,Gamma,2013-12-01,NA
+9002491,Correctional,Epsilon,2013-12-16,NA
+9002493,Correctional,Gamma,2013-12-16,NA
+9002495,Correctional,Epsilon,2015-07-01,NA
+9002506,Correctional,Alpha,2014-02-01,NA
+9002507,Correctional,Alpha,2014-02-01,NA
+9002508,Correctional,Alpha,2014-02-01,NA
+9002510,Correctional,Epsilon,2014-02-01,NA
+9002515,Correctional,Epsilon,2014-02-18,NA
+9002523,Correctional,Gamma,2014-03-17,NA
+9002533,Correctional,Alpha,2014-04-01,NA
+9002534,Correctional,Epsilon,2014-04-01,NA
+9002535,Correctional,Gamma,2014-04-01,NA
+9002536,Correctional,Epsilon,2017-08-15,NA
+9002541,Correctional,Epsilon,2014-05-01,NA
+9002543,Correctional Supervisor,Gamma,2014-05-01,NA
+9002546,Correctional,Alpha,2014-05-15,NA
+9002547,Correctional Supervisor,Alpha,2014-05-15,NA
+9002549,Correctional,Gamma,2014-05-15,NA
+9002557,Correctional,Delta,2014-06-01,NA
+9002561,Correctional,Gamma,2014-06-01,NA
+9002569,Correctional Supervisor,Epsilon,2014-06-16,NA
+9002575,Correctional,Delta,2014-06-16,NA
+9002576,Correctional,Epsilon,2014-06-16,NA
+9002577,Correctional,Delta,2014-06-16,NA
+9002587,Correctional,Beta,2014-07-15,NA
+9002589,Correctional,Gamma,2014-07-15,NA
+9002590,Correctional,Gamma,2014-07-15,NA
+9002595,Correctional,Beta,2014-08-01,NA
+9002598,Correctional,Beta,2014-08-01,NA
+9002601,Correctional,Gamma,2014-08-01,NA
+9002602,Correctional,Alpha,2016-02-01,NA
+9002611,Correctional,Delta,2014-08-15,NA
+9002612,Correctional,Alpha,2014-08-15,NA
+9002613,Correctional,Alpha,2014-08-15,NA
+9002614,Correctional,Alpha,2014-08-15,NA
+9002623,Correctional,Beta,2018-08-01,NA
+9002625,Correctional,Epsilon,2014-09-15,NA
+9002627,Correctional,Epsilon,2014-09-15,NA
+9002637,Correctional,Beta,2014-10-01,NA
+9002646,Correctional,Delta,2014-10-15,NA
+9002649,Correctional,Gamma,2014-10-15,NA
+9002657,Correctional,Alpha,2014-11-01,NA
+9002660,Correctional,Gamma,2014-11-01,NA
+9002672,Correctional,Alpha,2014-11-17,NA
+9002675,Correctional,Delta,2014-11-17,NA
+9002686,Correctional,Alpha,2014-12-15,NA
+9002687,Correctional,Alpha,2014-12-15,NA
+9002690,Correctional,Epsilon,2015-01-01,NA
+9002691,Correctional,Epsilon,2015-01-01,NA
+9002703,Correctional,Delta,2015-01-15,NA
+9002707,Correctional,Alpha,2015-02-01,NA
+9002708,Correctional Supervisor,Alpha,2015-02-01,NA
+9002710,Correctional,Gamma,2015-02-01,NA
+9002711,Correctional,Gamma,2017-12-15,NA
+9002712,Correctional,Epsilon,2015-02-01,NA
+9002718,Correctional,Alpha,2015-02-01,NA
+9002721,Correctional,Gamma,2017-04-01,NA
+9002722,Correctional,Delta,2017-10-16,NA
+9002723,Correctional,Gamma,2015-02-17,NA
+9002727,Correctional Supervisor,Gamma,2015-03-01,NA
+9002729,Correctional,Gamma,2015-03-01,NA
+9002730,Correctional,Epsilon,2015-03-01,NA
+9002731,Correctional,Delta,2015-03-01,NA
+9002740,Correctional,Gamma,2015-03-16,NA
+9002742,Correctional,Gamma,2015-03-16,NA
+9002745,Correctional,Alpha,2017-10-01,NA
+9002746,Correctional,Alpha,2015-04-01,NA
+9002748,Correctional,Gamma,2015-04-01,NA
+9002753,Correctional,Delta,2015-04-01,NA
+9002760,Correctional,Beta,2015-04-15,NA
+9002761,Correctional,Beta,2015-04-15,NA
+9002763,Correctional,Alpha,2015-05-01,NA
+9002770,Correctional,Beta,2015-05-01,NA
+9002773,Correctional,Epsilon,2017-03-01,NA
+9002783,Correctional,Gamma,2017-02-01,NA
+9002787,Correctional,Epsilon,2015-06-01,NA
+9002788,Correctional,Alpha,2015-06-01,NA
+9002794,Correctional,Gamma,2015-06-15,NA
+9002796,Correctional,Gamma,2015-07-01,NA
+9002799,Correctional,Alpha,2015-07-01,NA
+9002802,Correctional,Beta,2015-07-15,NA
+9002803,Correctional,Alpha,2015-07-15,NA
+9002805,Correctional,Alpha,2015-07-15,NA
+9002807,Correctional,Delta,2015-07-15,NA
+9002813,Correctional,Gamma,2019-01-01,NA
+9002815,Correctional,Alpha,2015-08-01,NA
+9002821,Correctional,Beta,2015-08-01,NA
+9002822,Correctional Supervisor,Beta,2015-08-01,NA
+9002823,Correctional,Gamma,2015-08-01,NA
+9002826,Correctional,Gamma,2017-10-01,NA
+9002828,Correctional Supervisor,Gamma,2015-08-01,NA
+9002833,Correctional,Delta,2018-07-01,NA
+9002834,Correctional,Epsilon,2015-08-17,NA
+9002835,Correctional,Epsilon,2015-08-17,NA
+9002838,Correctional,Gamma,2016-05-01,NA
+9002839,Correctional,Gamma,2015-08-17,NA
+9002842,Correctional,Alpha,2015-09-01,NA
+9002844,Correctional,Gamma,2015-09-01,NA
+9002850,Correctional,Gamma,2015-09-15,NA
+9002853,Correctional,Alpha,2015-10-01,NA
+9002854,Correctional,Epsilon,2015-10-01,NA
+9002855,Correctional,Epsilon,2015-10-01,NA
+9002857,Correctional,Alpha,2015-10-01,NA
+9002858,Correctional,Gamma,2015-10-01,NA
+9002859,Correctional,Gamma,2015-10-01,NA
+9002862,Correctional,Gamma,2015-10-01,NA
+9002867,Correctional Supervisor,Alpha,2015-10-01,NA
+9002870,Correctional,Epsilon,2015-10-01,NA
+9002886,Correctional,Epsilon,2015-11-01,NA
+9002889,Correctional,Epsilon,2015-11-01,NA
+9002891,Correctional,Beta,2015-11-01,NA
+9002894,Correctional,Epsilon,2015-11-01,NA
+9002896,Correctional Supervisor,Gamma,2015-11-01,NA
+9002902,Correctional,Beta,2015-11-01,NA
+9002913,Correctional,Epsilon,2015-12-01,NA
+9002914,Correctional,Epsilon,2015-12-01,NA
+9002916,Correctional,Epsilon,2015-12-01,NA
+9002917,Correctional,Epsilon,2017-08-15,NA
+9002920,Correctional,Epsilon,2015-12-01,NA
+9002922,Correctional,Gamma,2015-12-01,NA
+9002924,Correctional,Gamma,2015-12-01,NA
+9002925,Correctional,Beta,2015-12-01,NA
+9002930,Correctional,Gamma,2015-12-01,NA
+9002931,Correctional,Beta,2015-12-01,NA
+9002938,Correctional,Alpha,2016-01-01,NA
+9002941,Correctional,Alpha,2016-01-01,NA
+9002943,Correctional,Gamma,2016-01-01,NA
+9002945,Correctional,Epsilon,2016-01-01,NA
+9002946,Correctional,Epsilon,2016-01-01,NA
+9002947,Correctional,Epsilon,2016-01-01,NA
+9002953,Correctional,Beta,2016-01-01,NA
+9002961,Correctional,Alpha,2016-02-01,NA
+9002963,Correctional,Alpha,2017-02-15,NA
+9002966,Correctional Supervisor,Gamma,2016-02-01,NA
+9002967,Correctional,Beta,2016-09-01,NA
+9002968,Correctional,Epsilon,2016-02-01,NA
+9002970,Correctional Supervisor,Epsilon,2016-02-01,NA
+9002971,Correctional,Epsilon,2016-02-01,NA
+9002978,Correctional,Gamma,2016-02-16,NA
+9002981,Correctional,Alpha,2016-03-01,NA
+9002984,Correctional,Alpha,2016-03-01,NA
+9002985,Correctional,Epsilon,2016-03-01,NA
+9002986,Correctional,Epsilon,2016-03-01,NA
+9002992,Correctional,Alpha,2016-03-01,NA
+9002993,Correctional Supervisor,Alpha,2016-03-01,NA
+9003005,Correctional,Beta,2016-04-01,NA
+9003011,Correctional,Alpha,2016-04-01,NA
+9003012,Correctional,Alpha,2016-04-01,NA
+9003014,Correctional,Delta,2016-04-01,NA
+9003015,Correctional,Delta,2016-04-01,NA
+9003017,Correctional,Epsilon,2016-04-01,NA
+9003019,Correctional,Epsilon,2018-03-01,NA
+9003024,Correctional,Gamma,2016-04-01,NA
+9003034,Correctional,Gamma,2016-05-01,NA
+9003037,Correctional,Epsilon,2016-05-01,NA
+9003039,Correctional,Delta,2016-05-01,NA
+9003041,Correctional,Epsilon,2016-05-01,NA
+9003051,Correctional,Delta,2016-06-01,NA
+9003055,Correctional,Epsilon,2016-06-01,NA
+9003056,Correctional,Gamma,2016-06-01,NA
+9003059,Correctional,Gamma,2016-06-01,NA
+9003065,Correctional,Epsilon,2016-06-01,NA
+9003066,Correctional,Epsilon,2016-06-01,NA
+9003084,Correctional,Gamma,2018-02-01,NA
+9003087,Correctional,Gamma,2016-07-01,NA
+9003092,Correctional,Epsilon,2016-07-01,NA
+9003093,Correctional,Beta,2016-07-01,NA
+9003099,Correctional,Delta,2016-08-01,NA
+9003102,Correctional,Delta,2016-08-01,NA
+9003107,Correctional,Gamma,2016-08-01,NA
+9003109,Correctional,Alpha,2016-08-01,NA
+9003110,Correctional,Alpha,2016-08-01,NA
+9003124,Correctional,Gamma,2016-09-01,NA
+9003125,Correctional,Beta,2016-09-01,NA
+9003132,Correctional,Gamma,2016-09-01,NA
+9003135,Correctional Supervisor,Beta,2016-09-01,NA
+9003138,Correctional,Gamma,2016-09-01,NA
+9003156,Correctional,Gamma,2016-10-01,NA
+9003159,Correctional,Epsilon,2016-10-01,NA
+9003162,Correctional,Beta,2016-10-01,NA
+9003163,Correctional,Beta,2016-10-01,NA
+9003187,Correctional,Beta,2016-12-01,NA
+9003194,Correctional,Epsilon,2016-12-01,NA
+9003206,Correctional,Gamma,2016-12-01,NA
+9003214,Correctional,Epsilon,2017-11-15,NA
+9003216,Correctional,Epsilon,2017-01-01,NA
+9003218,Correctional,Beta,2017-01-01,NA
+9003232,Correctional,Beta,2017-02-01,NA
+9003233,Correctional,Beta,2017-02-01,NA
+9003238,Correctional,Alpha,2017-02-01,NA
+9003239,Correctional,Alpha,2017-02-01,NA
+9003241,Correctional,Alpha,2017-02-01,NA
+9003242,Correctional,Gamma,2017-02-01,NA
+9003245,Correctional,Epsilon,2017-02-01,NA
+9003251,Correctional,Alpha,2017-03-01,NA
+9003252,Correctional,Alpha,2017-03-01,NA
+9003253,Correctional,Alpha,2017-03-01,NA
+9003254,Correctional,Beta,2017-03-01,NA
+9003258,Correctional,Gamma,2017-03-01,NA
+9003261,Correctional,Gamma,2017-03-01,NA
+9003262,Correctional,Gamma,2017-03-01,NA
+9003267,Correctional,Alpha,2017-04-01,NA
+9003271,Correctional,Gamma,2017-04-01,NA
+9003272,Correctional,Gamma,2017-04-01,NA
+9003273,Correctional,Gamma,2017-04-01,NA
+9003276,Correctional,Beta,2017-04-01,NA
+9003278,Correctional,Beta,2017-04-01,NA
+9003287,Correctional,Gamma,2017-04-01,NA
+9003289,Correctional,Delta,2017-04-01,NA
+9003291,Correctional,Delta,2017-04-01,NA
+9003307,Correctional,Epsilon,2017-05-01,NA
+9003308,Correctional,Epsilon,2017-05-01,NA
+9003309,Correctional,Beta,2017-05-01,NA
+9003316,Correctional,Delta,2017-06-01,NA
+9003317,Correctional,Delta,2017-06-01,NA
+9003318,Correctional,Delta,2017-06-01,NA
+9003320,Correctional,Epsilon,2017-06-01,NA
+9003322,Correctional,Epsilon,2017-06-01,NA
+9003330,Correctional,Epsilon,2017-06-15,NA
+9003332,Correctional,Epsilon,2017-06-15,NA
+9003335,Correctional,Delta,2017-07-01,NA
+9003340,Correctional,Epsilon,2017-07-01,NA
+9003341,Correctional,Epsilon,2017-07-01,NA
+9003343,Correctional,Alpha,2017-07-01,NA
+9003357,Correctional,Epsilon,2017-08-01,NA
+9003364,Correctional Supervisor,Beta,2017-08-01,NA
+9003375,Correctional,Epsilon,2017-08-15,NA
+9003387,Correctional,Gamma,2017-09-01,NA
+9003394,Correctional,Epsilon,2017-09-01,NA
+9003397,Correctional,Epsilon,2017-09-01,NA
+9003398,Correctional,Epsilon,2017-09-01,NA
+9003410,Correctional,Beta,2017-09-01,NA
+9003414,Correctional,Epsilon,2017-09-01,NA
+9003421,Correctional,Delta,2017-09-15,NA
+9003425,Correctional,Alpha,2017-09-15,NA
+9003428,Correctional,Delta,2017-10-01,NA
+9003433,Correctional,Delta,2017-10-01,NA
+9003434,Correctional,Delta,2017-10-01,NA
+9003435,Correctional,Delta,2017-10-01,NA
+9003436,Correctional,Gamma,2017-10-01,NA
+9003442,Correctional,Beta,2017-10-01,NA
+9003448,Correctional,Epsilon,2017-10-01,NA
+9003452,Correctional,Gamma,2017-10-01,NA
+9003459,Correctional,Epsilon,2017-10-16,NA
+9003476,Correctional,Epsilon,2017-11-01,NA
+9003487,Correctional,Beta,2017-11-01,NA
+9003490,Correctional,Gamma,2017-11-01,NA
+9003494,Correctional,Gamma,2017-11-01,NA
+9003496,Correctional,Gamma,2017-11-01,NA
+9003497,Correctional,Gamma,2017-11-01,NA
+9003498,Correctional,Gamma,2017-11-01,NA
+9003505,Correctional,Alpha,2017-11-01,NA
+9003517,Correctional,Epsilon,2017-11-15,NA
+9003518,Correctional,Epsilon,2017-11-15,NA
+9003526,Correctional,Epsilon,2017-11-15,NA
+9003533,Correctional,Alpha,2017-12-01,NA
+9003534,Correctional,Alpha,2017-12-01,NA
+9003535,Correctional,Alpha,2017-12-01,NA
+9003538,Correctional,Gamma,2017-12-01,NA
+9003541,Correctional,Alpha,2017-12-01,NA
+9003557,Correctional,Gamma,2017-12-15,NA
+9003558,Correctional,Gamma,2017-12-15,NA
+9003560,Correctional,Delta,2017-12-15,NA
+9003569,Correctional,Beta,2018-01-01,NA
+9003571,Correctional,Beta,2018-01-01,NA
+9003572,Correctional,Gamma,2018-01-01,NA
+9003573,Correctional,Alpha,2018-01-01,NA
+9003580,Correctional,Gamma,2018-01-01,NA
+9003592,Correctional,Beta,2018-02-01,NA
+9003597,Correctional,Alpha,2018-02-01,NA
+9003615,Correctional,Epsilon,2018-02-01,NA
+9003619,Correctional,Gamma,2018-02-15,NA
+9003620,Correctional,Gamma,2018-02-15,NA
+9003624,Correctional,Beta,2018-02-15,NA
+9003629,Correctional,Delta,2018-02-15,NA
+9003640,Correctional,Alpha,2018-03-01,NA
+9003656,Correctional,Gamma,2018-03-01,NA
+9003658,Correctional,Beta,2018-03-01,NA
+9003662,Correctional,Epsilon,2018-03-15,NA
+9003664,Correctional,Epsilon,2018-03-15,NA
+9003665,Correctional,Gamma,2018-03-15,NA
+9003668,Correctional,Beta,2018-03-15,NA
+9003672,Correctional,Epsilon,2018-03-15,NA
+9003673,Correctional,Beta,2018-03-15,NA
+9003681,Correctional,Gamma,2018-04-01,NA
+9003684,Correctional,Gamma,2018-04-01,NA
+9003687,Correctional,Gamma,2018-04-01,NA
+9003691,Correctional,Beta,2018-04-01,NA
+9003693,Correctional,Delta,2018-04-01,NA
+9003704,Correctional,Alpha,2018-04-01,NA
+9003709,Correctional,Delta,2018-04-16,NA
+9003727,Correctional,Alpha,2018-05-01,NA
+9003732,Correctional,Alpha,2018-05-01,NA
+9003733,Correctional,Beta,2018-05-01,NA
+9003735,Correctional,Beta,2018-05-01,NA
+9003738,Correctional,Beta,2018-05-01,NA
+9003743,Correctional Supervisor,Alpha,2018-05-15,NA
+9003746,Correctional,Gamma,2018-05-15,NA
+9003750,Correctional,Gamma,2018-05-15,NA
+9003751,Correctional,Beta,2018-05-15,NA
+9003757,Correctional,Delta,2018-05-15,NA
+9003759,Correctional,Delta,2018-05-15,NA
+9003770,Correctional,Gamma,2018-06-01,NA
+9003780,Correctional,Gamma,2018-06-01,NA
+9003792,Correctional,Epsilon,2018-06-15,NA
+9003797,Correctional,Epsilon,2018-06-15,NA
+9003799,Correctional,Beta,2018-06-15,NA
+9003800,Correctional,Delta,2018-06-15,NA
+9003810,Correctional,Alpha,2018-07-01,NA
+9003811,Correctional,Alpha,2018-07-01,NA
+9003815,Correctional,Epsilon,2018-07-01,NA
+9003816,Correctional,Epsilon,2018-07-01,NA
+9003817,Correctional,Epsilon,2018-07-01,NA
+9003819,Correctional,Alpha,2018-07-01,NA
+9003821,Correctional,Beta,2018-07-01,NA
+9003822,Correctional,Beta,2018-07-01,NA
+9003823,Correctional,Beta,2018-07-01,NA
+9003828,Correctional,Beta,2018-07-01,NA
+9003831,Correctional,Gamma,2018-07-01,NA
+9003832,Correctional,Gamma,2018-07-01,NA
+9003839,Correctional,Delta,2018-07-16,NA
+9003844,Correctional,Beta,2018-07-16,NA
+9003846,Correctional,Epsilon,2018-07-16,NA
+9003847,Correctional,Delta,2018-07-16,NA
+9003852,Correctional,Alpha,2018-07-16,NA
+9003864,Correctional,Epsilon,2018-08-01,NA
+9003872,Correctional,Alpha,2018-08-01,NA
+9003882,Correctional,Gamma,2018-08-15,NA
+9003886,Correctional,Alpha,2018-08-15,NA
+9003887,Correctional,Epsilon,2018-08-15,NA
+9003893,Correctional,Epsilon,2018-08-15,NA
+9003895,Correctional,Alpha,2018-08-15,NA
+9003907,Correctional,Epsilon,2018-09-01,NA
+9003913,Correctional,Alpha,2018-09-01,NA
+9003914,Correctional,Alpha,2018-09-01,NA
+9003915,Correctional,Alpha,2018-09-01,NA
+9003917,Correctional,Alpha,2018-09-01,NA
+9003924,Correctional,Gamma,2018-09-17,NA
+9003931,Correctional,Beta,2018-10-01,NA
+9003945,Correctional,Gamma,2018-10-01,NA
+9003946,Correctional,Gamma,2018-10-01,NA
+9003950,Correctional,Alpha,2018-10-01,NA
+9003956,Correctional Supervisor,Alpha,2018-11-01,NA
+9003957,Correctional,Alpha,2018-11-01,NA
+9003959,Correctional,Alpha,2018-11-01,NA
+9003960,Correctional Supervisor,Alpha,2018-11-01,NA
+9003961,Correctional,Alpha,2018-11-01,NA
+9003962,Correctional,Alpha,2018-11-01,NA
+9003964,Correctional Supervisor,Beta,2018-11-01,NA
+9003965,Correctional,Beta,2018-11-01,NA
+9003967,Correctional,Epsilon,2018-11-01,NA
+9003968,Correctional,Beta,2018-11-01,NA
+9003970,Correctional,Delta,2018-11-01,NA
+9003971,Correctional,Delta,2018-11-01,NA
+9003973,Correctional,Epsilon,2018-11-01,NA
+9003974,Correctional Supervisor,Epsilon,2018-11-01,NA
+9003980,Correctional,Gamma,2018-11-01,NA
+9003982,Correctional,Epsilon,2018-11-01,NA
+9003983,Correctional,Delta,2018-11-15,NA
+9003986,Correctional,Gamma,2018-11-15,NA
+9003987,Correctional,Beta,2018-11-15,NA
+9003990,Correctional,Beta,2018-11-15,NA
+9003997,Correctional,Alpha,2018-12-01,NA
+9003999,Correctional,Beta,2018-12-01,NA
+9004005,Correctional,Gamma,2018-12-01,NA
+9004014,Correctional,Epsilon,2019-01-01,NA
+9004017,Correctional,Beta,2019-01-01,NA
+9004019,Correctional,Beta,2019-01-01,NA
+9004020,Correctional,Beta,2019-01-01,NA
+9004023,Correctional,Beta,2019-01-01,NA
+9004024,Correctional,Beta,2019-01-01,NA
+9004025,Correctional,Beta,2019-01-01,NA
+9004027,Correctional,Alpha,2019-01-01,NA
+9004028,Correctional,Alpha,2019-01-01,NA
+9004030,Correctional,Epsilon,2019-01-01,NA
+9004033,Correctional,Epsilon,2019-01-01,NA
+9004034,Correctional,Delta,2019-01-01,NA
+9004035,Correctional,Epsilon,2019-01-01,NA
+9004037,Correctional,Epsilon,2019-01-01,NA
+9004038,Correctional,Epsilon,2019-01-01,NA
