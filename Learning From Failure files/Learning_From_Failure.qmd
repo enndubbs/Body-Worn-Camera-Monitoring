@@ -116,7 +116,8 @@ For example, let's take employee #9001005 at Facility Epsilon between April 1st 
 
 Sample_Clips <- read_csv("Output/Footage Sample.csv")
 
-print(Sample_Clips)
+Sample_Clips %>% 
+  knitr::kable(align = 'l')
 
 ```
 
@@ -126,7 +127,8 @@ We can join this to a similar table of shifts logged. This particular employee h
 
 Sample_Shifts <- read_csv("Output/Shift Sample.csv")
 
-print(Sample_Shifts)
+Sample_Shifts %>% 
+  knitr::kable(align = 'l')
 
 ```
 
@@ -142,7 +144,8 @@ To reshape the data for joining, I created a function that takes any data frame 
 source("R/Interval Convert.R")
 
 Interval_Convert(Sample_Shifts, Shift_Start, Shift_End, "hour") %>% 
-  select(-Single)
+  select(-Single) %>% 
+  knitr::kable(align = 'l')
 ```
 
 The footage can be converted in a similar manner, and using this new format, I can join together the full tables of footage and shifts to determine how much footage got recorded with no corresponding shift in the timekeeping system and vice-versa.
@@ -152,7 +155,8 @@ The footage can be converted in a similar manner, and using this new format, I c
 Mismatch_Statistics <- read_csv("Output/Footage-Shift Mismatch Summary Statistics.csv")
 
 Mismatch_Statistics %>% 
-  select(HR_Location, Footage_Hours_No_Shift, Employee_IDs_With_Missing_Shift)
+  select(HR_Location, Footage_Hours_No_Shift, Employee_IDs_With_Missing_Shift) %>% 
+  knitr::kable(align = 'l')
 ```
 
 To summarize, almost every employee has footage hours that do not match with logged shifts, totaling nearly 14,000 hours. But what about the opposite? How many hours of shifts got logged with no corresponding footage?
@@ -160,7 +164,8 @@ To summarize, almost every employee has footage hours that do not match with log
 ```{r, echo = FALSE, message = FALSE}
 
 Mismatch_Statistics %>% 
-  select(HR_Location, Shift_Hours_No_Footage, Employee_IDs_With_Missing_Footage)
+  select(HR_Location, Shift_Hours_No_Footage, Employee_IDs_With_Missing_Footage) %>% 
+  knitr::kable(align = 'l')
 ```
 
 Oh dear.
