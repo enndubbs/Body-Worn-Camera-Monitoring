@@ -1,0 +1,217 @@
+---
+title: "Learning From Failure"
+author: "Noah Wright"
+format: html
+editor: visual
+---
+
+## Background
+
+Scandal after scandal had plagued the Texas Juvenile Justice Department throughout its history. Another round of new leadership had arrived with another round of solutions to these chronic problems. As part of a larger reform plan, an initiative to equip all juvenile correctional officers with body worn cameras began in 2018.
+
+*How much more background do I need here?*
+
+Secure residential facilities had overhead cameras, but these were very old (they still ran on tape) and captured no audio. This presented a number of problems when it came to deciphering contested incidents, and these cameras had clearly not prevented any of the prior scandals from taking place. TJJD received special funding from the legislature to roll out body worn cameras systemwide, and after the cameras had been successfully deployed, I was tasked with seeing if staff were complying with the usage policies we had put in place.
+
+Part of the issue was that the use of body-worn cameras was new in the field of corrections. There was not a large literature to draw from, and our first attempt at regulating and monitoring their usage fell flat on its face. This is a case study of how the Texas Juvenile Justice Department developed a methodology for comparing data on correctional officers' body-worn camera usage with data from its shift management software. This is also a case study of analysis failure, as it became clear that real-world failures of implementation were corrupting the data and rendering the methodology unusable. However, the silver lining of this failure was that it helped the agency identify previously unrecognized problems. The purpose of this case study is to demonstrate how negative findings can still be incredibly useful in real-world settings.
+
+In 2019, body worn cameras were mostly a tool for law enforcement, and their use in a correctional environment posed a unique new challenges. TJJD had no automated mechanism for reviewing footage through machine learning, nor did the agency have the IT capacity to develop one. The only way we had to analyze footage was to view it. Unlike police officers, correctional officers deal directly with their charges for virtually their entire shift. In an 8-hour shift, a police officer might record a few calls and traffic stops. A correctional officer, on the other hand, would record 8 consecutive hours. And because TJJD recorded round-the-clock for hundreds of employees at a time, every hour of real time that passed had, on average, an eye-popping 100 hours of footage. To put that another way, reviewing a single hour of TJJD operations across all facilities would take 2.5 full work weeks.
+
+As a result, footage review had to be done in a limited, reactive manner. If we received an incident report we could easily zero in on the cameras of the officers involved and review the incident accordingly. But our executive director had hoped to be able to use the footage proactively, looking for red flags in employees in order to prevent potential abuses instead of waiting until after those abuses had happened.
+
+Because the agency had no way of automating the monitoring of footage contents, any proactive analysis had to be metadata based. But what to look for in the metadata? Once again, the lack of best practice literature left us in the lurch. So we brainstormed ideas for 'red flags' and came up with the following:
+
+1.  **Minimal quantity of footage** -- our camera policy required correctional officers to have their cameras on at all times in the presence of youth.
+
+2.  **Frequently turning the camera on and off** -- outside of bathroom breaks, a correctional officer working a dorm should not be turning their camera on and off repeatedly throughout the day.
+
+3.  **Large gaps between clips** -- A three-hour gap in the middle of a shift should be looked into, even if it's an accident or honest mistake. It defeats the purpose of having cameras if they're not even turned on.
+
+4.  **Mismatch between clips recorded and shifts worked** ­-- the agency had very recently rolled out a new shift tracking software. We should expect to see the hours logged by the body cameras roughly match the hours logged as shifts worked.
+
+## Analysis Part 1 - QC and Footage Analysis
+
+I gathered the most recent three weeks of body worn camera data, from April 1st - April 21st of 2019 for the analysis. I also pulled the data from Shifthound (our shift management software) covering the same time period. Finally, I gathered HR data from CAPPS, the system that most of the State of Texas used at the time for personnel management and finance.
+
+An initial QC of these data sources revealed a variety of issues. See the R script for details, but the most important ones I discovered were missing and/or bad employee ID's. Each employee had a unique identifier within CAPPS, which in turn was used to identify their assigned body camera and log their shifts. So it came as something of a surprise to find employee ID's in both the body camera and shift data that did not exist in CAPPS. Likewise, I found ID's of correctional officers in CAPPS who should appeared in the body camera or shift data but did not. Lastly, I found ID's of staff who did appear in both systems, but were not employed at any point between April 1st - April 21st of 2019.
+
+In total, 10.6% of clips representing 11.3% of total footage had to be excluded from analysis due to these initial data quality issues.
+
+In order to operationalize our brainstorming session, I needed to see what exactly the the cameras captured in their metadata. The variables most relevant to our purposes were:
+
+-   Clip start
+
+-   Clip end
+
+-   Camera Used
+
+-   Who was assigned to the camera at the time
+
+-   The role of the person assigned to the camera
+
+Using these fields, I first created the following aggregations per employee ID:
+
+**Number of clips** = Number of clips recorded.
+
+**Days with footage** = Number of discrete dates that appear in these clips.
+
+**Footage Hours** = Total duration of all shot footage.
+
+**Significant Gaps** = Number of clips where the previous clip's end date was either greater than 15 minutes or less than 8 hours before this clip's start date.
+
+I then devised the following staff metrics using the following definitions:
+
+**Average clips per day** = Number of clips / Days with footage
+
+**Average footage per day** = Footage hours / Days with footage
+
+**Average clip length** = Footage hours / Number of clips
+
+**Average gaps per day** = Gaps / Days with footage
+
+Then I looked at the distributions of each of the 4 per-staff metrics
+
+```{r, echo = FALSE, message = FALSE}
+
+library(tidyverse)
+
+Footage_Metrics_by_Employee <- read_csv("Output/Footage Metrics by Employee.csv")
+
+Footage_Metrics_by_Employee %>% 
+  select(-Clips, -Days_With_Footage, -Footage_Hours, -Gaps) %>% 
+  pivot_longer(-Employee_ID, names_to = "Metric", values_to = "Value") %>% 
+  ggplot(aes(x = Value)) +
+  geom_histogram() +
+  facet_wrap(~Metric, scales = "free")
+
+```
+
+By eyeballing I could tell most staff were recording fewer than 10 clips a day, shooting about .5-2 hours for each clip, for a total of 3-10 hours of daily footage, with the majority of employees having less than one significant gap per day. Superficially, this looked like a strong basis to start looking into individual camera use.
+
+A very quick ballpark calculation says otherwise. Let us be very conservative and stick with only the assembled metrics, which exclude the bad ID's mentioned earlier. Let us further assume that each employee works on average 40 hours per week, a substantial underestimate given that overtime was common.
+
+```{r, echo = FALSE, message = FALSE}
+
+Percent_Display <- function(x) {
+  str_c(100 * round(x, 3), "%")
+}
+
+Percent_of_Shift_Hours_in_Footage <- sum(Footage_Metrics_by_Employee$Footage_Hours) / (nrow(Footage_Metrics_by_Employee)*3*40)
+
+Percent_Display(Percent_of_Shift_Hours_in_Footage)
+
+```
+
+Even with these unrealistic assumptions pushing the estimated total working hours down, less than 60% of these hours appear in the footage.
+
+Surely the shift data will clarify this.
+
+## Analysis Part 2 - Footage and Shift Comparison
+
+In order to join the shift data to the camera data, we need a common unit of analysis beyond "Employee ID". A messy many-to-many join of every clip of footage to every shift worked would not be feasible in its current format.
+
+For example, let's take employee #9001005 at Facility Epsilon between April 1st and April 3rd. This employee has the following clips recorded during that time period:
+
+```{r, echo = FALSE, message = FALSE}
+
+Sample_Clips <- read_csv("Output/Footage Sample.csv")
+
+Sample_Clips %>% 
+  knitr::kable(align = 'l')
+
+```
+
+We can join this to a similar table of shifts logged. This particular employee had the following shifts scheduled from April 1st, 2019 - April 3rd, 2019.
+
+```{r, echo = FALSE, message = FALSE}
+
+Sample_Shifts <- read_csv("Output/Shift Sample.csv")
+
+Sample_Shifts %>% 
+  knitr::kable(align = 'l')
+
+```
+
+We can join the two tables together by ID on a messy many-to-many join, but that tells us nothing of how much they overlap (or fail to overlap) without extensive additional work.
+
+We have a unique identifier for employee-clip and employee-shift, but what we need is a unique identifier that can be used to join the two. Fortunately, for this particular data we can *create* a unique identifier since both clips and shifts are fundamentally measures of *time*.
+
+So while Employee ID is not in itself unique (i.e., one employee can have multiple clips), Employee ID combined with time of day is unique. After all, a person can only be in one place at one time!
+
+To reshape the data for joining, I created a function that takes any data frame with a start & end column and unfolds it into discrete units of time. Using the code below, the shift data above for employee 9001005 converts into one entry per hour of the day per shift. As a result, two 8-hour shifts get turned into 16 Employee-Hours.
+
+```{r, echo = FALSE, message = FALSE}
+source("R/Interval Convert.R")
+
+Interval_Convert(Sample_Shifts, Shift_Start, Shift_End, "hour") %>% 
+  select(-Single) %>% 
+  knitr::kable(align = 'l')
+```
+
+The footage can be converted in a similar manner, and using this new format, I can join together the full tables of footage and shifts to determine how much footage got recorded with no corresponding shift in the timekeeping system and vice-versa.
+
+```{r, echo = FALSE, message = FALSE}
+
+Mismatch_Statistics <- read_csv("Output/Footage-Shift Mismatch Summary Statistics.csv")
+
+Mismatch_Statistics %>% 
+  select(HR_Location, Footage_Hours_No_Shift, Employee_IDs_With_Missing_Shift) %>% 
+  knitr::kable(align = 'l')
+```
+
+To summarize, almost every employee has footage hours that do not match with logged shifts, totaling nearly 14,000 hours. But what about the opposite? How many hours of shifts got logged with no corresponding footage?
+
+```{r, echo = FALSE, message = FALSE}
+
+Mismatch_Statistics %>% 
+  select(HR_Location, Shift_Hours_No_Footage, Employee_IDs_With_Missing_Footage) %>% 
+  knitr::kable(align = 'l')
+```
+
+Oh dear.
+
+That is also almost every employee, but this time totaling about 47,000 hours. To put it another way, that's an entire work week per employee not showing up in camera footage.
+
+At this point, we could probably rule out deliberate noncompliance. The clip data already implied that most employees were following the policy, and our facility leadership would have noticed a mass refusal large enough to show up this clearly in the data.
+
+One way to check would be to exclude shifts that contain zero footage whatsoever. This would rule out total mismatches, where for whatever reason the logged shifts had totally failed to overlap with recorded clips.
+
+For these shifts, we could look at the proportion of the shift covered by the footage. So if an 8-hour shift had 4 hours of recorded footage associated with it, then we could say that 50% of the shift had been recorded.
+
+```{r, echo = FALSE, message = FALSE}
+All_Employee_Metrics <- read_csv("Output/All Employee Metrics.csv")
+
+All_Employee_Metrics %>%
+  ggplot(aes(Average_Percent_of_Other_Shifts_Recorded)) +
+  geom_histogram()
+```
+
+As it turned out, for most shifts with footage the majority of the shift had been recorded. This roughly matched the clip analysis.
+
+## Causes of Failure
+
+The failure to gather reliable data from linking the clip data to the shift data prompted follow-ups into what exactly was going wrong. As it turned out, many things were going wrong.
+
+First, a number of technical problems plagued the early rollout of the cameras.
+
+-   All of our facilities suffered from high turnover, and camera ownership was not consistently updated. Employees who no longer worked at the agency could therefore appear in the clip data - somebody else had taken over their camera but not put their name and ID on it.
+
+-   We had no way of telling if a camera was not recording due to being docked and recharging or not recording due to being switched off.
+
+-   In the early days of the rollout, footage got assigned to an owner based on the owner of the *dock*, not the camera. In other words, if Employee A had recorded their shift but uploaded the footage using a dock assigned to Employee B then the footage would show up in the system as belonging to Employee B.
+
+The shift data was, unsurprisingly, even worse. Here we came across our most important finding. While the evidence showed that there wasn't any mass non-compliance with the use of the cameras, there *was* mass non-compliance with the usage of our shift management software. To explain why we'll need to visit the reasons we even had a shift management software separate from our HR system.
+
+Our HR system, CAPPS, had a feature that tracked hours worked in order to calculate leave and overtime pay. However, CAPPS was a statewide application designed for 9-5 office workers, and could not capture the irregular working hours of our staff (much less aid in planning future shifts).
+
+We had obtained the shift management software to fill these gaps, but not realized how inconsistently it was being used. First, different facilities used the shift software differently. All were required to have their employees to use it, but some followed through on this better than others. And even for the ones that did make a good-faith effort at follow-through, quality control was nonexistent. In CAPPS, time entry determined pay, so strong incentives existed to ensure accurate entry. But for our shift management software, no incentives existed at all for making sure that entries were correct. For example, a correctional officer could have a 40-hour work week scheduled in the the shift software but miss the entire week due to an injury, and the software would still show them as having worked 40 hours that week. Nobody bothered to go back and correct these types of errors because there was no reason to.
+
+## What we learned from failure
+
+Whatever means we used to monitor compliance with the camera policy, it couldn't be fully automated. The agency followed up this analysis with a random sampling approach, in which monitors would randomly select times of day they knew a given staff member would have to have their cameras turned on and actually watch the associated clips. This review process confirmed the first impressions from the statistical review above: most employees were making good faith attempts at complying with the policy despite technical glitches, short-staffing, and administrative confusion.
+
+As for the shift management software, we had to rethink a number of aspects of its implementation. In the process, leadership also came to clarify that its primary purpose was to help facilities schedule future shifts. As a result, ensuring accuracy after the fact was never something the agency would devote significant time and resources to, rendering it much less useful as a source for future data analysis.
+
+This confirmed that proactive monitoring of correctional officers was a human process which had to come from supervisors and staff. We already had so many other checks in place it wasn't worth the effort to flag staff based on unreliable camera usage metrics or micromanage their after-the-fact shift logs.
+
+The one piece of the analysis we did use going forward was the clip analysis, but only as a supplement for an already-launched investigation, not a prompt for one. Body-worn camera footage remained immensely useful for investigations after-the-fact, but inconsistencies in clip data in and of themselves were not particularly noteworthy red flags. At the end of the day, analytics can contextualize and enhance human judgment, but it cannot replace it.

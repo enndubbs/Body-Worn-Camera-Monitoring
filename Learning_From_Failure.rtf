@@ -1,0 +1,762 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \qc \f0 \sa180 \li0 \fi0 \b \fs36 Learning From Failure\par}
+{\pard \qc \f0 \sa180 \li0 \fi0  Noah Wright\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 Background\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Scandal after scandal had plagued the Texas Juvenile Justice Department throughout its history. Another round of new leadership had arrived with another round of solutions to these chronic problems. As part of a larger reform plan, an initiative to equip all juvenile correctional officers with body worn cameras began in 2018.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\i How much more background do I need here?}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Secure residential facilities had overhead cameras, but these were very old (they still ran on tape) and captured no audio. This presented a number of problems when it came to deciphering contested incidents, and these cameras had clearly not prevented any of the prior scandals from taking place. TJJD received special funding from the legislature to roll out body worn cameras systemwide, and after the cameras had been successfully deployed, I was tasked with seeing if staff were complying with the usage policies we had put in place.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Part of the issue was that the use of body-worn cameras was new in the field of corrections. There was not a large literature to draw from, and our first attempt at regulating and monitoring their usage fell flat on its face. This is a case study of how the Texas Juvenile Justice Department developed a methodology for comparing data on correctional officers\u8217' body-worn camera usage with data from its shift management software. This is also a case study of analysis failure, as it became clear that real-world failures of implementation were corrupting the data and rendering the methodology unusable. However, the silver lining of this failure was that it helped the agency identify previously unrecognized problems. The purpose of this case study is to demonstrate how negative findings can still be incredibly useful in real-world settings.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 In 2019, body worn cameras were mostly a tool for law enforcement, and their use in a correctional environment posed a unique new challenges. TJJD had no automated mechanism for reviewing footage through machine learning, nor did the agency have the IT capacity to develop one. The only way we had to analyze footage was to view it. Unlike police officers, correctional officers deal directly with their charges for virtually their entire shift. In an 8-hour shift, a police officer might record a few calls and traffic stops. A correctional officer, on the other hand, would record 8 consecutive hours. And because TJJD recorded round-the-clock for hundreds of employees at a time, every hour of real time that passed had, on average, an eye-popping 100 hours of footage. To put that another way, reviewing a single hour of TJJD operations across all facilities would take 2.5 full work weeks.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 As a result, footage review had to be done in a limited, reactive manner. If we received an incident report we could easily zero in on the cameras of the officers involved and review the incident accordingly. But our executive director had hoped to be able to use the footage proactively, looking for red flags in employees in order to prevent potential abuses instead of waiting until after those abuses had happened.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Because the agency had no way of automating the monitoring of footage contents, any proactive analysis had to be metadata based. But what to look for in the metadata? Once again, the lack of best practice literature left us in the lurch. So we brainstormed ideas for \u8216'red flags\u8217' and came up with the following:\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 1.\tx360\tab {\b Minimal quantity of footage} \u8211- our camera policy required correctional officers to have their cameras on at all times in the presence of youth.\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 2.\tx360\tab {\b Frequently turning the camera on and off} \u8211- outside of bathroom breaks, a correctional officer working a dorm should not be turning their camera on and off repeatedly throughout the day.\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 3.\tx360\tab {\b Large gaps between clips} \u8211- A three-hour gap in the middle of a shift should be looked into, even if it\u8217's an accident or honest mistake. It defeats the purpose of having cameras if they\u8217're not even turned on.\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 4.\tx360\tab {\b Mismatch between clips recorded and shifts worked} \u173 ?\u8211- the agency had very recently rolled out a new shift tracking software. We should expect to see the hours logged by the body cameras roughly match the hours logged as shifts worked.\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 Analysis Part 1 - QC and Footage Analysis\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 I gathered the most recent three weeks of body worn camera data, from April 1st - April 21st of 2019 for the analysis. I also pulled the data from Shifthound (our shift management software) covering the same time period. Finally, I gathered HR data from CAPPS, the system that most of the State of Texas used at the time for personnel management and finance.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 An initial QC of these data sources revealed a variety of issues. See the R script for details, but the most important ones I discovered were missing and/or bad employee ID\u8217's. Each employee had a unique identifier within CAPPS, which in turn was used to identify their assigned body camera and log their shifts. So it came as something of a surprise to find employee ID\u8217's in both the body camera and shift data that did not exist in CAPPS. Likewise, I found ID\u8217's of correctional officers in CAPPS who should appeared in the body camera or shift data but did not. Lastly, I found ID\u8217's of staff who did appear in both systems, but were not employed at any point between April 1st - April 21st of 2019.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 In total, 10.6% of clips representing 11.3% of total footage had to be excluded from analysis due to these initial data quality issues.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 In order to operationalize our brainstorming session, I needed to see what exactly the the cameras captured in their metadata. The variables most relevant to our purposes were:\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 \bullet \tx360\tab Clip start\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 \bullet \tx360\tab Clip end\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 \bullet \tx360\tab Camera Used\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 \bullet \tx360\tab Who was assigned to the camera at the time\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 \bullet \tx360\tab The role of the person assigned to the camera\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Using these fields, I first created the following aggregations per employee ID:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b Number of clips} = Number of clips recorded.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b Days with footage} = Number of discrete dates that appear in these clips.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b Footage Hours} = Total duration of all shot footage.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b Significant Gaps} = Number of clips where the previous clip\u8217's end date was either greater than 15 minutes or less than 8 hours before this clip\u8217's start date.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 I then devised the following staff metrics using the following definitions:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b Average clips per day} = Number of clips / Days with footage\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b Average footage per day} = Footage hours / Days with footage\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b Average clip length} = Footage hours / Number of clips\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b Average gaps per day} = Gaps / Days with footage\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Then I looked at the distributions of each of the 4 per-staff metrics\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\pict\pngblip\picw480\pich384\picwgoal7275\pichgoal5820 89504e470d0a1a0a0000000d49484452000001e000000180080300000042fe41fd0000014a504c544500000000003a000066003a900066b619193f191962193f62193f8119628119629f1a1a1a3333333a00003a003a3a00663a3a3a3a90db3f19193f193f3f19623f3f623f3f813f629f3f81813f81bd4d4d4d4d4d6e4d4d8e4d6eab4d8ec859595962191962193f621962623f19623f3f623f8162621962623f626262629fd966000066003a66b6b666b6ff6e4d4d6e4d6e6e4d8e6e6e8e6e6eab6eabc86eabe4813f19813f3f813f6281621981813f819f8181bd9f81bdd98e4d4d8e4d6e8e4d8e8e6e4d8e6eab8ec8ff903a0090b69090dbb690dbff9f62199f623f9fbd819fd9d9ab6e4dab6e6eab6e8eab8e4dabc8ababe4e4abe4ffb66600b6ffffbd813fbdd9bdbdd9d9c88e4dc8ffffd99f62d9bd81d9d99fd9d9bdd9d9d9db903adbffdbdbffffe4ab6ee4ffffebebebffb666ffc88effdb90ffdbdbffe4abffffb6ffffc8ffffdbffffe4ffffff2e66124d000000097048597300000ec300000ec301c76fa864000014db49444154789ced9df97f1c3719c6dd2369c852202504ec0049530a6c4a0c94a41c71385ca8c1094752e3d4c706d2d8c149bdffffafe898d9957624cd2b8d3487e6793eaded489a57efa3ef4a33b33b3bb33687b2d65ad709406905c0990b80331700672e00ce5c009cb93c01cf32d0386c0270e6360138739b009cb94d00cedc2600676e138033b709c099db04e0cc6da6067cf4fe966f4a0793c9e4d2feecf0ea2efb4fafaa14e875aeeaaa22d88cebae4e87efb16d2753bf8d52033ef8e9ba5f42b3bd8bccf7cea57d93ffbe018eebae4e629ba39b7e8413033efee4fe87fb87d7f6d91f5b473727ccdde1773eb8b8cb5f8b539eece49d1f6dcd64452139298eef4d25b0a35bbf9d5c584c9372588a50d77eb30c739f15fdedea8f3d5ee1cd6d4673c7a6b5d2a6285422aaee797fb2879da9f807cd6522c02c819d29b32ffe589fed5d66b94d854d9e2d2b3960566445a1834bfb0b3b7c086e5eda3f58982f0197a1d645731986b72f0a686a6e3396bba35bbb4a9bd2f232a2e69e852f7a38601dd4ae208901efb11c2ef39f7beb3c2be66431096f095ffcb52f2bca21288d964330e56d348b3325949806224cb144d3d7bee63663b9d377e54aa11271e1be180ddec387fb7fad3d06480bf8f8de842f3e87d7fe2dd6b0c9444c3456b1238bcbc56db25c86178b4e3104dcfb4ef9222e012f43f156324cfb80e3b9634bee723f54146a1115f7b29af720f610549769000b3f7c15fbddb5fde265ccb3e4afd1e5d45bbebe17f694bd14fb6775062f43753983a3ba5bee5a8a4225a2e69e352c7a98ed118ef1d202dee3538faf629375b1e33c90878fe2ff6f6f297b2965cfa91c678a45ecb252a9ec839550cb7d70bb80a3b9e3f50ae0c2f232a2eabe84cb7be0ff535d26017cfceb624d1199b035e7823cfc60433279e783292ff9da275b45c542da99e2d1fb3f518fa2c599e06525949c323cccf13d7614dd26e088ee76b4a3e8a25089a8bae7afaaa2079901cd6557ef64d5f120be9510725ad982cd2077f4774f0ebf5bdfa64bc0fc206579f8215e9eda8b9d4bbab5541ac27828b14dbabb9536f75701dbdcef515c7709b8638dc32600676e138033b71908f88522ed1fa48a909af89b506d1ac3980a9b94450f5896013000033031360037a901e0b0320006600026c61e37e01b42759b0c0cb0666ab080cf1f6e5c7f3c9fbf7eb0f1832f01588b9d07e0a7dbf3d31f7c79fe707bfefc8700acc5ce02f0eb3f7c51fe3afbc51700acc6ce02f0d9c7ffe04bf4d9c75fce5fff9e2dd5f3af3311066745722cfcb7ebb50664ca0178739bd365ab740198abf60559a9c00c76e7d5e50c1664973318805f6405f8f59f0459ec830db1b300cc8fa2d9f43d7f781747d1abb1f300cc4e80bfff05ce834db1f3006c75eecab75201c0eebc0038fa26000cc0f63000bc5a01c0eebc0038fa26000cc0f63000bc5a01c0eebc060cf886a2ba4d3a047cb66939dd076053be4ac53000bf7eb03d7f6efcd89b085887edca0180bd2a22012e3e4c31bce50ec0a67c958a4101f6fbd85b9aaafedd438d1eb058a2af3f367cec8d196cca57a91806607e90f5ab47a68fbd470998a81bab4ad24b34b11d30f6c18a7357beb2a202b86e930e9768366dd9e1b3e1636f0036e52b2b0604787eba214e8089e7c1555300dc73c0569b006cca575658009bc7a22e98770d00bf00600006600036e52b2bc601b86ad09d43ce805d635117ccbb06805f0030000330009bf29515000cc0845cdd15000cc0e61a3fc72bb2996a1434a500d86a1333d894afac00e06100e657a2057dbb10808701f8f9c6f63ce82e3b003c08c067bffce376d85d7600780880cf1ffdebe176d85d769c808931ba949d474e809fdfe5cb73d05d763083070058dc9f439dc100fc222bc0cf37b8ee621fac2923c073799a1474971d001e0e609c076bca0bb0c5b92b5f594106bc2801e0c865000cc0a90053c7a8a6975880adf73d076053beb2624880adf73df702bc6a215bc04168bb046cbfef39009bf21d1c60cffb9ebb2df80d662bea116033e6e480adf73dc70c36e53b3cc0d6fb9e03b029dfc101b6dff71c804df90e0eb0fdbee7006cca777880adf73d076053be91002fff4e0ed86a13804df902b03d872100ae5563c0aa22e746979d47ee806bf38d0ad8da8bbd7fc2268180a909db73182c60d51c00db730060008e5706c0000cc09a0058f93b3a66ead0b82b00188001d8103e3fc026d1130eec208d00d86a3360062f13c60c06607b21005bedb92b5a026c4b7be08093c9342c367bee0a0006600036844f41d53952767bee0a0006e031013edbdcd8207dbb300555e748d9edb92b005815bf88f4ece78f0977d94941d53952767bee0a005675caa93edd267cc33f0555e748d9edb92b007855b487faa5a0aa880024b6c602985f2c4cb8cb4e0aaace91b2db73576006eb7afde0ee9c72979d14549d2365b7e7ae30023edda05d17dd3cedbe01e65fcb327eaf72357c0aaace91b2db73579800736fe2d17675df0f6e9e76cf004bbe94bbeca4a0ea1c29bb3d77856d896690ebbf9bd43ced9e0196f7c9da1ec379307b01d71f4b86256f1ddeb6d4ec9dacb8249d4a07f86cf3fa63d3b164c3195c4dbb6733783480e7b4ef07374f1b80a923e5182f6785f534c9f87e0e006701b8589bebbf1fdc3c6d00268e5451106906b38349d27db21aa70dc0d4912a0a7afe4e56256d00a68e545100c0006cac0160003685699c36005347aa2800600036d6b40a584d7ed5472da4266583035c1d34000660630d00d3158554a01a255ea3f1025e09158554e8a0610603b0b1068001d8a426b92a11027b0f16005b6d2ec244c8751987922c66b018a9160047cb5548f9331c1cb52c2fc037b4b103e01700dc19603dd5fe028e653d5cd28a5602c000dc0de06af2005c3f46009c37e0aa0018800118805b01bc4c1880e91a1c6053f2004c130093019bbf5dd8a2f5207903365ef8de51da7365889303b6dc65a775eb4152737503367f01bcd384f5f279057924c0966ff8b7eb3b5474c0e62f9f759bbd221b60a5a0a8f4064c7d72f2c095adcd5ac084bbecd856892835f137a1da3486897d56d3fd6912e12e3b2423a1352d01a63e203a3fc084bbec908c84d6b40498fa80e8fc0013eeb24332125ad31260ea03a2f3034cb8cb0ec948684d4b80a90f88ce10b05501c79abddda451186ac34e020270f33000dcff4d1a8501e0fe6fd2284cae80a1210880331700672e15f0abdb77f8af93373fef261728810038732d013f5b2bf536613bed8d1faa966ff65237908f6ef2517187fea622fbe3b7d5267428ac53828a86b5414dcfb432cb308329d22f8020ead477e88b4737f96c52dca1bfa9e8fe9e925e80c23a25a81ca3baa0c6675a99157890a57ff842d3d3ebfff4dca2787493d736f38085a22ab2bff34794d79fb44e082a1bd606353ed3ca2c0df0cb77c5124dd807eb1f9f521532f2febdc498c1647f6c9124ed45b8755250de9014b4721773b354c05f7d4ad9fb0ae91740501500987f8ce7d909bf437f5391fdf13d08651673eba4a0e29540085a7da6955981fbe0b666b0787493af0226fdaafcfc11f6225e339810d4f04c2bb3f4197ca736d1327ec03e38e828da7b07cce5bfdb5e959f3f226052501a60d333adccd2f6c1f43360fd0208aa7c0107f00ddb775444f6c7fb3bff3bed348914b45ccb9d418dcfb4324b5fa2d7a80759ed9c07978f6ef2dc26c23ed8eb3c98d29ff779b033a8f1995666e1bde8cc05c0992b74898606a2ea0c7ef5d1671de401259261893e79ebbfede7012592093096e88c6400fc04333823190eb2dec03e3823799e26cd32d0386c0270e636cd80c5653b57f2763e66c0cff8f1f3abdb0ec25da71d43e3054cb8aab2ebb463088001b8eb1423c804184b7446368d807190958f4d33e0313807e05ae747ef6ff97576f8de84697da5f0eaae731b515dd388d0ebb4521e01b0f708cc66072c97cbbe1b15b23971c908f8ab4fafd45c3b2b73fde97a4df4d5044d98d203e6db1eddac8c4b04c0de23303bb8b83b3bbee7bb55219b13978c809fbc3dafb93a9a6f7afcc9fd0ff70fafedb33fb68e6e4e58e687dff9e0e22e7f994d791e93777eb43593156a82b35959287e891fb5dbf09f451f57c5ffa22b361b960d8f6efd767261ab0c2eeab5082c51d9cdce54fc230260ff1138be37d57229936ee6c41730f13489c5de99326be28ff5d9de65d6ed54ac5a3c115672c0b294152b8079dda5fde2172bacdfa6ac15cd0560ded5ad5da5e1d1cd4bfb7c7e2c53d122b03e8a6e0e589cf5590cc0e12350362a926ee82411e03d16fe32ffb9b7ce3b64492e66e82d91327f5dcb8a32c1f7c40e8817f02ce5af6223e736fcf5ad34e780afeeaeec01f9d2b5dc5a59d3e59f9c43d1cd87fb7fdd8a02386004d409c71b2d936ee0c41730ed3cf8f89e18f7c36bff16ebd384ad2a32811d595c2e5c13b1dc28098a5fac4ef955bb4d81b4685efc8bc35fb493b877a65a2a4a0459cdbb110b6b0cc0812350642d1a15493774e20d787e42380f162f46be42fdeeda7ef112957bcaa9587b8ad7efe2b5ab00aecce0fa6d8a5a7d0673f1a57e392ccbad2bc3c21a16ddccf6e4a15163c0012320f7c1dc7cd14826ddd0894b66c014e77b3c55be42f1f31e6dff383bfcf696b2075a666edb07d76fb3dc0773f77b17c526bc91322c372feb51b56129878477c3ff8f013860044409ff51342a926ee82409e0e35f17cb85e8842d2717e4a105b33b79e783292ff9da275b45c50a60f5289abda82feed66eb33c8ae6f1bf57ec9976b463cff77f521e7b96a9141116678f453732f5c680434640667371d1a84cba99932480090a39790d3fe1a5bfe970f85df12b964d574f756e8c497b3b712915607e00b23cb49047c2176af20ed966d9f0feeab0d822ec1525890193dc682c839db8940af000340e9b009cb94d00cedc2600676e331070ed1deaede5699b7b84f1b3d92b971ecd01188001387dda009c200c0003706b6903f00bca7374fd7a0d04bcf2e84f006e909c5e0cc021cd01782e6f1a5cde6bcaf68037004e909c5e9c0ef0f38dedf226ce96079d037092e4f4e26480cf7ef9c7edf27e8fd687ac027082e4f4e25480cf1ffd8b4ddbe28eadf54f009769f80d570f3462c0cfeff275b9b87ba9f541e7239bc1edeac6aa62066773f6dc3483b94c63370ec0ed245716570047e9b5b022efd87a17fbe05c01cfe5695271cf65eb83ce0138417265711b80711e9c31608a4d004e905c590cc0e1cd01188001580b00c0f1922b8b0138bc39000330006b0100385e72653100873707605fc90c0237ee4ebd035c818a191cd41c80011880b500001c2739008ed31c80011880b5003902563f2f05e00c012bd70d03708680d5eb8601383fc0da75c373fb05c371e5049cbe7b29d3d8e50758bb6eb8ea7cf033f87463e3fb5f8cf89a2cfdbae17e0056073978c04b7f6cbfb3fc52d208bf9ba45f379c1fe002f2a8af8b56ae1bce13303336eaef26f5ee3c382ee0b3cdeb8ff1dd245de9936b75062fa72ebe9b9425e0f9d3ed51ef83b3065c2ccaf86e52ae80f96902db078ff73c387bc0349b001c2d39025a00269703300003b021bdc62edb6a0ec0000cc086f41abb6cabf9900157617bf50ac0006c4fafb1cbb69a0330008f18b049b2bfc08dbb1300d7d8c40c8e961c00c76c1e0838a58200a749c53476e3009c3239cce098cd01188001d8905e63976d350760000660437a8d5db6d51c8001381560db480170cce6003c3fdbdcd8c00dc1f305cc2f733ffbf9e3f17ef92c77c0a71c272e7ccf1770318b47fde5b3aae2015ef06906b81ac60330ff3a03be7c962fe0d70feecef160aca680a3828c0af86c739b53c63e3853c0922f1e8c150ed846a02780e52d2ab6711e9c2b60a24d00b6f666e4602c07e0f8cd011880f5f76a013837c0fa7bb5009c1d60fdbd5a00ce0e3017e94d5a9baa1c6ce58de5931645a6b1cb11b0f25e6dd5396630b1bf6e9a5300abefd58e0bb049b2a7c08dbb93f3285a79afb6281b09605300d582577fdd34af07acbf571b057032790d09004badbc570bc0b901ae736eee4d19861601af0c3ecd3a0003f00b005e15007b950370b780d5b8002c942360631f000cc0847200f691a775000e07dc8d3cadcb472739afc972f401c0edcbd3fafc943ff9ccf9dd24471fb903ae9a6e0ba35d9ed69f5eff279bc1ceeba21d7d0070fbf2b42e9768e77793aa7df80d570f347ac0ceef2639fac00c6e5f9ed62d33188085aaa6dbc26897a7750918fbe0cc013bbf9be4e80380db97a7759c07bba49aae9674a3402b0695a354eda33b629ecd4b2ba39ec1000cc0d63e00b87d795a07600076f401c0edcbd33a0003b0a38f3101ee97c8d60178bc804b55a3fb0d570f942be0f26fcc60000660005e8d1e0541dae6000cc00305ac0a80011880870c58ca621d8001d8110b80fb238b7500066047ac7c009befd1d13ea67059ac136c3a626503d872afcaf6313555c53ac1a62b0a6da8cbadd234779493015bee93d51e9858aa5827d87445a92343486625a4234c42c0e1f7aa1c94b2b5590b38fc5e95b4e248cd3dc2f8d9ec95cbb433386bc0f5cf4d4a92760f0087dfab323cb980e64d01d73f372949da3d001c7eafcaf0e4029a37055cffdca42469f70070f8bd2ac3930b68de1470fd739392a4dd07c056791e6ba66deedd3e51dc5e35e702e0b8717bd59c0b80e3c6ed55732e008e1bb757cdb91a0086862000ce5c009cb90038730170e60a05acbdf153afd30d7ee34fb2ce1f6e5c7f5cdf6ca1b34daff064f5ca6598c940c0fa0510b5e26fe37b349f3fdd169fdf51f5fa01cbc6870451bd7219683210b0fee10b491ecd7974afd0da677df1d42b978126030107f4e633153efe87dfe2950870af5cb60b58bf0082a0b34d1f2f9bdbc20f5562f5f2da69d3d42b978126db9bc11ecdbda3b3e38f5f3deac50c4ee832cc647bfb607e4c418dfe27ffd5c877bf4d8dd92b970126838fa2effaec6e7cd7baa79e4b340bed73f84a55af5c069a6ce93cf8f986d751138bee75cac74e40139c25f5cc659849bc9395b90038730170e602e0cc05c0990b8033d7e8007ff5e9dbe2f7b3b7cb9297dff8acb36cd26b7480e7cfdefc7cce39df290b00382f499e2fbff9b95e90abc60778fee4ca5caed02fdf5d5b5bbbc2010bc6fcc7579faeadbdf9796d88016984804fdefaaf58a15fddbe23166c05b0d8413f63f5f96884805f7df49958a1ffc7394aba25e0133e7b05f86c3442c07c8d96c7d0276c897e4305fc6c4de84ad71946d418019fbcf51f7e0cfdeaf61b9fadcce0bc5667a131027ef5d19ff93134df17cf4fb419ccfed57572b13546c0f327dfe22b34a7f9f25d01f8d5ed2becb8eb0d7690c5a0e7457994804fd6eef05f4fd81ef82fb7eff0e9cbcf987ef6913c4dca8aef38018f49009cb90038730170e602e0cc05c0990b80331700672e00ce5c009cb9fe0f1b854002361a683c0000000049454e44ae426082}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 By eyeballing I could tell most staff were recording fewer than 10 clips a day, shooting about .5-2 hours for each clip, for a total of 3-10 hours of daily footage, with the majority of employees having less than one significant gap per day. Superficially, this looked like a strong basis to start looking into individual camera use.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 A very quick ballpark calculation says otherwise. Let us be very conservative and stick with only the assembled metrics, which exclude the bad ID\u8217's mentioned earlier. Let us further assume that each employee works on average 40 hours per week, a substantial underestimate given that overtime was common.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 [1] "58.5%"\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Even with these unrealistic assumptions pushing the estimated total working hours down, less than 60% of these hours appear in the footage.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Surely the shift data will clarify this.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 Analysis Part 2 - Footage and Shift Comparison\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 In order to join the shift data to the camera data, we need a common unit of analysis beyond \u8220"Employee ID\u8221". A messy many-to-many join of every clip of footage to every shift worked would not be feasible in its current format.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 For example, let\u8217's take employee #9001005 at Facility Epsilon between April 1st and April 3rd. This employee has the following clips recorded during that time period:\par}
+{
+\trowd \trgaph120
+\clbrdrb\brdrs\cellx2160\clbrdrb\brdrs\cellx4320\clbrdrb\brdrs\cellx6480\clbrdrb\brdrs\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Employee_ID\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Clip_ID\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Clip_Start\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Clip_End\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx2160\cellx4320\cellx6480\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 156421\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 10:54:34\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 13:34:34\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx2160\cellx4320\cellx6480\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 155093\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 13:40:59\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 13:54:51\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx2160\cellx4320\cellx6480\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 151419\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 14:03:16\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 16:00:30\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx2160\cellx4320\cellx6480\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 153133\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 16:10:09\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 17:39:51\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx2160\cellx4320\cellx6480\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 151088\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 17:57:51\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 19:06:44\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx2160\cellx4320\cellx6480\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 150947\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 10:56:34\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 14:48:50\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx2160\cellx4320\cellx6480\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 151699\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 14:54:23\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 17:17:15\par}
+\cell}
+}
+\intbl\row}
+{\pard \ql \f0 \sa180 \li0 \fi0 \par}
+{\pard \ql \f0 \sa180 \li0 \fi0 We can join this to a similar table of shifts logged. This particular employee had the following shifts scheduled from April 1st, 2019 - April 3rd, 2019.\par}
+{
+\trowd \trgaph120
+\clbrdrb\brdrs\cellx2160\clbrdrb\brdrs\cellx4320\clbrdrb\brdrs\cellx6480\clbrdrb\brdrs\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Employee_ID\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Shift_ID\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Shift_Start\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Shift_End\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx2160\cellx4320\cellx6480\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E050603\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 11:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 19:00:00\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx2160\cellx4320\cellx6480\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E051303\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 11:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 19:00:00\par}
+\cell}
+}
+\intbl\row}
+{\pard \ql \f0 \sa180 \li0 \fi0 \par}
+{\pard \ql \f0 \sa180 \li0 \fi0 We can join the two tables together by ID on a messy many-to-many join, but that tells us nothing of how much they overlap (or fail to overlap) without extensive additional work.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 We have a unique identifier for employee-clip and employee-shift, but what we need is a unique identifier that can be used to join the two. Fortunately, for this particular data we can {\i create} a unique identifier since both clips and shifts are fundamentally measures of {\i time}.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 So while Employee ID is not in itself unique (i.e., one employee can have multiple clips), Employee ID combined with time of day is unique. After all, a person can only be in one place at one time!\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 To reshape the data for joining, I created a function that takes any data frame with a start & end column and unfolds it into discrete units of time. Using the code below, the shift data above for employee 9001005 converts into one entry per hour of the day per shift. As a result, two 8-hour shifts get turned into 16 Employee-Hours.\par}
+{
+\trowd \trgaph120
+\clbrdrb\brdrs\cellx1289\clbrdrb\brdrs\cellx2578\clbrdrb\brdrs\cellx3351\clbrdrb\brdrs\cellx3931\clbrdrb\brdrs\cellx5220\clbrdrb\brdrs\cellx6509\clbrdrb\brdrs\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Interval_Start\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Interval_End\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Employee_ID\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Shift_ID\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Shift_Start\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Shift_End\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Seconds_Duration_Within_Interval\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1289\cellx2578\cellx3351\cellx3931\cellx5220\cellx6509\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 07:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E050603\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3600\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1289\cellx2578\cellx3351\cellx3931\cellx5220\cellx6509\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 07:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 08:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E050603\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3600\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1289\cellx2578\cellx3351\cellx3931\cellx5220\cellx6509\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 08:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 09:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E050603\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3600\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1289\cellx2578\cellx3351\cellx3931\cellx5220\cellx6509\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 09:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 10:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E050603\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3600\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1289\cellx2578\cellx3351\cellx3931\cellx5220\cellx6509\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 10:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 11:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E050603\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3600\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1289\cellx2578\cellx3351\cellx3931\cellx5220\cellx6509\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 11:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 12:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E050603\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3600\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1289\cellx2578\cellx3351\cellx3931\cellx5220\cellx6509\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 12:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 13:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E050603\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3600\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1289\cellx2578\cellx3351\cellx3931\cellx5220\cellx6509\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 13:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E050603\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-01 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3600\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1289\cellx2578\cellx3351\cellx3931\cellx5220\cellx6509\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 07:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E051303\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3600\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1289\cellx2578\cellx3351\cellx3931\cellx5220\cellx6509\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 07:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 08:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E051303\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3600\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1289\cellx2578\cellx3351\cellx3931\cellx5220\cellx6509\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 08:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 09:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E051303\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3600\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1289\cellx2578\cellx3351\cellx3931\cellx5220\cellx6509\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 09:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 10:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E051303\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3600\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1289\cellx2578\cellx3351\cellx3931\cellx5220\cellx6509\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 10:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 11:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E051303\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3600\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1289\cellx2578\cellx3351\cellx3931\cellx5220\cellx6509\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 11:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 12:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E051303\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3600\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1289\cellx2578\cellx3351\cellx3931\cellx5220\cellx6509\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 12:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 13:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E051303\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3600\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1289\cellx2578\cellx3351\cellx3931\cellx5220\cellx6509\cellx8636
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 13:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9001005\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 E051303\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 06:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2019-04-02 14:00:00\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3600\par}
+\cell}
+}
+\intbl\row}
+{\pard \ql \f0 \sa180 \li0 \fi0 \par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The footage can be converted in a similar manner, and using this new format, I can join together the full tables of footage and shifts to determine how much footage got recorded with no corresponding shift in the timekeeping system and vice-versa.\par}
+{
+\trowd \trgaph120
+\clbrdrb\brdrs\cellx2880\clbrdrb\brdrs\cellx5760\clbrdrb\brdrs\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 HR_Location\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Footage_Hours_No_Shift\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Employee_IDs_With_Missing_Shift\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx2880\cellx5760\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Alpha\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 1805\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 122\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx2880\cellx5760\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Beta\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 3749\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 114\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx2880\cellx5760\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Delta\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 1208\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 133\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx2880\cellx5760\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Epsilon\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 2899\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 157\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx2880\cellx5760\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Gamma\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 4153\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 170\par}
+\cell}
+}
+\intbl\row}
+{\pard \ql \f0 \sa180 \li0 \fi0 \par}
+{\pard \ql \f0 \sa180 \li0 \fi0 To summarize, almost every employee has footage hours that do not match with logged shifts, totaling nearly 14,000 hours. But what about the opposite? How many hours of shifts got logged with no corresponding footage?\par}
+{
+\trowd \trgaph120
+\clbrdrb\brdrs\cellx1502\clbrdrb\brdrs\cellx4382\clbrdrb\brdrs\cellx8639
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 HR_Location\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Shift_Hours_No_Footage\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Employee_IDs_With_Missing_Footage\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1502\cellx4382\cellx8639
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Alpha\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 7338\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 127\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1502\cellx4382\cellx8639
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Beta\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 6014\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 118\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1502\cellx4382\cellx8639
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Delta\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 12830\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 141\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1502\cellx4382\cellx8639
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Epsilon\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 9000\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 168\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx1502\cellx4382\cellx8639
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Gamma\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 11960\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 183\par}
+\cell}
+}
+\intbl\row}
+{\pard \ql \f0 \sa180 \li0 \fi0 \par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Oh dear.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 That is also almost every employee, but this time totaling about 47,000 hours. To put it another way, that\u8217's an entire work week per employee not showing up in camera footage.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 At this point, we could probably rule out deliberate noncompliance. The clip data already implied that most employees were following the policy, and our facility leadership would have noticed a mass refusal large enough to show up this clearly in the data.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 One way to check would be to exclude shifts that contain zero footage whatsoever. This would rule out total mismatches, where for whatever reason the logged shifts had totally failed to overlap with recorded clips.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 For these shifts, we could look at the proportion of the shift covered by the footage. So if an 8-hour shift had 4 hours of recorded footage associated with it, then we could say that 50% of the shift had been recorded.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 Warning: Removed 156 rows containing non-finite values (`stat_bin()`).\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\pict\pngblip\picw480\pich384\picwgoal7275\pichgoal5820 89504e470d0a1a0a0000000d49484452000001e000000180080300000042fe41fd000000c9504c544500000000003a000066003a3a003a900066b63333333a00003a003a3a00663a90db4d4d4d4d4d6e4d4d8e4d6eab4d8ec859595966000066003a66666666b6ff6e4d4d6e4d6e6e4d8e6e6e8e6e6eab6eabe48e4d4d8e4d6e8e4d8e8e6e4d8ec8ff903a0090903a90906690b69090dbb690dbffab6e4dab6e6eab6e8eabc8ababe4e4abe4ffb66600b6db90b6dbffb6ffffc88e4dc8ffffdb903adbffdbdbffffe4ab6ee4ffffebebebffb666ffc88effdb90ffdbb6ffdbdbffe4abffffb6ffffc8ffffdbffffe4ffffff9b6bf3f3000000097048597300000ec300000ec301c76fa86400000f0f49444154789ced9d6d7bdbb61586ed349a132b69e7cce9b6649bbc76eecbe22d8e1737b2373b36ffff8f1a41f10d24c00380a08073fcdc1f6a597c081d9c5b20c554be785000d11ca42e002c0b040b07828503c1c28160e140b0703c057fb132b1495a3caf6a2c71080e8fe7550d04478fe7550d04478fe7550d04478fe7550d04478fe7550d04478fe7550d04478fe7550d04478fe7550d04478fe7550d04478fe7550d04478fe7550d04478fe7550d04478fe7550d04478fe7550d04478f471ffef77d2038791c82c3cb621187e0f0b258c42138bc2c1671080e2f8b451c82c3cb621187e0f0b258c42138bc2c1671080e2f8b451c82c3cb621187e0f0b258c42138bc2c1671c982c1126882238f8d15ec1f97bc8267cc424e1c82c3cb621187e0f0b258c42138bc2c1671080e2f8b451c82c3cb621187e0f0b258c42138bc2c1671080e2f8b451c82c3cb621187e0f0b258c42138bc2c1671080e2f8b451c82c3cb621187e0f0b258c42138bc2c1671080e2f8b451c82c3cb62115f56b06e3b7874080e8f437078592ce2101c5e168b38048797c5220ec1e165b188437078592ce2101c5e168b38048797c5220ec1e165b188cb11fcf8d3a628bebe5f7ffb1b042f397c32c1d7eb4d25f9fa3b085e72f85482effef4b74df1f5af9f8abb3f7e82e005874f24f8f1e77f96abf7eecfbf155ffff2a1fcfd772553eb1d8ce9cbb26e7025a88209c1d7efd4e1f9e6db46b062c6db544edc236f5d8d2182bd8aa105974bf7515bc110ec9fcf59f0f55af10ee7e039f99c0517bbcba4c79fdee15374709e81605c07cfc9672e784c8c49b38f43b0039ce310ec00e738043bc0390ec10e708e43b0039ce310ec00e738043bc0390ec10e708e43b0039ce310ec00e738043bc0390ec10e708e43b0039ce310ec00e738043bc0390ec10e708e43b0039ce310ec00e738043bc0390ec10e708e43b0039ce310ec00e738043bc0390ec10e708e43b0039ce39205033ffa7eac1b5c09aa002bd83f2e7905c79834fb38043bc0390ec10e708e43b0039ce310ec00e7f8286fd700c11ce310ec00e738043bc0390ec10e708e43b0039ce310ec00e738043bc0391e2878365ec54370781c821de01c87600738c721d801ce71087680731c821d601877d468df02c179c721d807867108f681611c827d601887601f18c621d807867108f681611c827d601887601f18c6c509be59af5f7fc27d935aa40956f7b3bbfe0ef70f6e9126b8968c7b173648145c2e5ddc3fb8416b76c896b904553d7907f0b7af3ee0fec12df6d5e4b8652e5ec5bb082e9459dc3fb841a2e0e2728373708334c1f5b119f70f6e902658dd02bc3c07e33ab8419c6013739bc4390ec13e308c43b00f0ce310ec03c33804fbc0300ec13e308c43b00f0ce310ec03c3f89e344270aa3804fbc0300ec13e308c43b00f0ce310ec03c33804fbc0300ec13e308c43b00f0ce310ec03c33804fbc030ce5ff0fdc9a9fab17df611820d40b00f0ce3dc055f1d34ac708836b1278d8e50c54face029e63689733cb5521daa78936007e63689733cb5521daa78a3e0dba3ea108d73b091d44a75a8e24d821fce26cebe109c5aa90e55bc4930cec193a456aa43156f5ec1a460f9685db46f498eeb7cb473f0d415f08eb9ab20ffb8d6452d95c8a4056aae26c1f72707f89065eee2684b72a8b91a5730cd223dcd2a6eeee2684b72a8b942b0256eeee2684b72a8b99a04e310fd45b6e05af39b73ace06117475b9243cdd52eb8d83eff0cc1832e8eb624879aeb94601ca2475d1c6d490e35d709c11758c1a32e8eb624879aab4970fd21eb10e7e05117475b9243cd7562054fb1484fb38a9bbb38da921c6aae106c899bbb38da921c6aae66c1d5d7768e2178d4c5d196e45073350abe529f9fef4f260c2fd2d3ace2e62e8eb624879aab4930be55f9058297e86956717317475b9243cd1587684bdcdcc5d196e45073350ac6872ce9824916e96956717317475b9243cd15823b1cba381d4b013557a3e087b363e2bbb3b17a9a55dca18bd3b1145073350abe5815c4b7a363f534abb84317a76329a0e66a12fc542f931cba381d4b01355708ee70e8e2742c05d45c8d87e8277a1decd0c5e9580aa8b91a0517db27791decd0c5e9580aa8b99a0593c4ea695671872e4ec75240cd15823b1cba381d4b01355707c1776fd7ebcd53b86f924317a76329a0e64a0b56372cbcfbfec313b87fb04317a76329a0e64a0bbe51569fc4bd0b1dba381d4b01355787437431b8fba8d8fb07dbbbe8184b81ebe42605ab1b533e81fb07dbbbe8184b01355717c15fdfbf2b8a2770ff60872e4ec75240cdd541f0dddb8db28c7330194b0135575af0ce6ff104ee1fecd0c5e9580aa8b9d282afd78a0dae83e9580aa8b93a1ca24dc4ea695671872e4ec75240cd55aa6073133cf6b10fb0b0314fa8d640b0651ffb000b1bf3846a0d045bf6b10fb0b0314fa8d640b0651ffb000b1bf3846a0d045bf6b10fb0b0314fa8d640b0651ffb000b1bf3846a0d045bf6e102d51a08b6ecc305aa35106cd9870b546b20d8b20f17a8d640b0651f2e50ad8160cb3e5ca05a03c1967db840b5e6890b4e642522546b209839546b209839546b209839546b209839546b209839546b580836cf28c62efb54b10c5427219839542721983954272198395427219839542721983954270305ef17fbf4dc62212373c1b5877c56b0865b2c64642e509d8460e6509d8460e6509d8460e6509d8460e6509d8460e6509d8460e6509d8460e6509d8460e6509d8460e6509d8460e6509d8460e6509d8c27d8fcb214bd91ec03384ccfdd16044330272038c22e3903c11176c919088eb04bce4070845d72068223ec9233102c1c08160e040b07828503c1c28160e140b070205838102c1c08164e14c1d52deda81b63995f1682172686e09bf5eb4f05798368f3cb42f0c244107cf9ead772059337a734bf2c042f4c04c1bb4334798368ed65a746b3611f609f0d63cd447749c1e40da2b557dad70a061a7156300467cb1cc1799e8381c61cc1e40da2a95782e0e5992338cfeb60a0112a780c25d8feb2832d36c1200408160e040b07828503c1c28160e124123c551004c704828503c1c28160e140b070205838102c1c08160e040b07828503c1c28160e140b070205838102c1c08160e040b07828503c1c28160e1c4136c20a4a0d903008d093d58c112c0215a38102c1c08160e040b273bc1202e102c1c08160e040b07828503c1c28160e140b070205838102c1c08160e040b07828503c1c28160e140b070205838102c1c08160e040b07828503c1c28160e1cc12ec75df2490843982fdee1f0c923047b0dfbd0b4112e60826ef1f0cb286144cde3fb879c7d837498be755cd9c3b802bc8fb07472d8b453caf6ae60a26cfc151cb6211cfab9ab982c9fb07472d8b453caf6ae60a26af83a396c5229e5735b3056b2c5d168b785ed54070f4785ed54070f4785ed54070f4785ed54070f4785ed54070f4785ed54070f4785ed54070f4785ed54070f4785ed5c4156c67d9ff93c879f4b4c543f0e2a343b0f0d12158f8e84204833c8160e140b070205838102c9c7982bbaff3d48fb4eff7cca51beceeed7abd298aebf57afdfa13b197ffe8f5b0516bef4653a3abeaa3165fb45f84a41a3f4b70f7672df523fdef5c66d20da6beb67bf7fd87e2721369686df47ad8a8b50f46535f2e8f597c3962fd66211b3f4b70f795dafa91fe1ddb997483dda8d22f378f3f7fa0f60919bd1e366aedfa68ea0d1ab5f8e2f2d5afbbc1c9c6cf12dc7d29be7ea47f4b7e26fa60e5a3f230541da9238f5e0f1bb5767d34b5b6a2165fb48768b2f1b304777fd6523fd2ffce6526da60eaebd9ea281d6d2174a3d7c346ad5d2bbefa19b5f8a2154c369ec90afefafe5dfd6cac53d9a0d4cbcd722bf8a6fdf813f13cbc9715bcaf7370f929baed4cac1e0d4abddc2c770ebe6cde9c0b085ef61cdcfd594bfd48ff3b97997483d57ed54a78fc2592826ef47ad8a8b5f73bb13b30472dbe6805938d8f711dac5e6bb9ebe072f4dea5e4ab6867b1aef67ad825ae83abd6ec0e9d518bdf0976693cfe254b38102c1c08160e040b07828503c1c24921f8eae03870cf87b303c5e1b963febfff36bd7a7ff7ad1aefb4cedebe981cf8aa7ee926a67eaad10caf5217ea36d1edb38f93bfcf2281e087b33f84cee0e1acead895e3fe2661f727a7bddf2ed448f727cf3f57d969c1d5ab6ecb77432fa64633ed55177a7b743ada34469ae0edb37f39cddb40dd375d921d53ebb5e7ae4ab3f5b0a4e087b3ea452f9e7feec56c7bd58516172b8732a509be78fe9fb355dd827255a8a35939a3db977f2f7fdc1eed8e6bf72707873fbefc58d41b1b7a82b5ddd42faba2689f7cf16339cea91aecb8b7afcaa8e756dd53f51b45bde7caeced8b1f76076c6d70fdb50b657517dbbdcc37d5ab54859ff65eac13dccca15f64f97337b89ae80fcfba8936bf4763ff82ef4f8eaba39d5a3d651f1e4ad9eaf1edd1aa5e9a576adac7e563256ed52e3345ddb78b6e4bb59bfa6527bd79b2dca51ca6bfb61eaa37d54a5b6fede3f241b516ebfdb4c15bb6cddba5377cb382ab917a07e4ba5075406f06eb175915b29bb03ed1e6f778eddebf60750052ada8fbb2ddbd6f4fabeefc4fa96c9e2c5bd86c6cf6ad3fbb94cf6abb35a2864ff66556dbb6baf4f6b1daa7127c5a8c6aeaa13e65ad8aa2377c2bf8a5eea4f99075da2baa5fa42ae4a8d9d89b68f37bbc76ef5ff0c5aa594ec7ea3d7b557fdcace7bfad3ea9568bb66c5ab3b1d9b73b4c6abb35272dedc9a1e06a48fdb94ef09bf36e1dbe381fd4d4477d20eb0ddfee75d13bf23785de1e1df78a6a8ad40a194eb4f93d4aa72bf62eb83cc9348bb03c171fb707e06abef7278755c3da797747e78a9ee0fe6eade0fe930e827be7e08f9ae0fe38039a210682ab89752b6f57a83a42b7454d0bae430204ef8e3feaf874ff467d8cda1e761795bbc997cf3487b1ede08ab713acedd61efd064f6a820fcf4787e8e660a87d8a5687e8fe380df52f56c1837349f361a1180ea615329c68f3bb7f5f6dec5b70f569a2fe7171501dad4ba9e5fc76f3550bf8e8f0bcfbecb1dbd8ed7ddc3eeaedd67c6ed19e2cffd3bf9c327dc8ea5f07b757b4e57fb471baec61fd5203c16acfca492fde5e0777457545f60ab93f5969136d7e8fd7f07d0b6e3eb75c95ddaa8e60d5e791c3661d94a7b2c37f940deb5f3df456712758dfad7f0572d8adc4dd5ba8b7c36a74d8edfe25abccb6fb6983b75cd59f070682ab57d91e180b55ff68d7cc617899540d3e9ca880cb2467b683133008214fc1eaa85c1fccc13cf214dc5c71d654ff4c74e0f13f193a4cbb7a0db75c783f642a18c402828503c1c28160e140b070205838102c9cff03512b484188b1a9330000000049454e44ae426082}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 As it turned out, for most shifts with footage the majority of the shift had been recorded. This roughly matched the clip analysis.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 Causes of Failure\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The failure to gather reliable data from linking the clip data to the shift data prompted follow-ups into what exactly was going wrong. As it turned out, many things were going wrong.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 First, a number of technical problems plagued the early rollout of the cameras.\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 \bullet \tx360\tab All of our facilities suffered from high turnover, and camera ownership was not consistently updated. Employees who no longer worked at the agency could therefore appear in the clip data - somebody else had taken over their camera but not put their name and ID on it.\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 \bullet \tx360\tab We had no way of telling if a camera was not recording due to being docked and recharging or not recording due to being switched off.\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 \bullet \tx360\tab In the early days of the rollout, footage got assigned to an owner based on the owner of the {\i dock}, not the camera. In other words, if Employee A had recorded their shift but uploaded the footage using a dock assigned to Employee B then the footage would show up in the system as belonging to Employee B.\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The shift data was, unsurprisingly, even worse. Here we came across our most important finding. While the evidence showed that there wasn\u8217't any mass non-compliance with the use of the cameras, there {\i was} mass non-compliance with the usage of our shift management software. To explain why we\u8217'll need to visit the reasons we even had a shift management software separate from our HR system.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Our HR system, CAPPS, had a feature that tracked hours worked in order to calculate leave and overtime pay. However, CAPPS was a statewide application designed for 9-5 office workers, and could not capture the irregular working hours of our staff (much less aid in planning future shifts).\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 We had obtained the shift management software to fill these gaps, but not realized how inconsistently it was being used. First, different facilities used the shift software differently. All were required to have their employees to use it, but some followed through on this better than others. And even for the ones that did make a good-faith effort at follow-through, quality control was nonexistent. In CAPPS, time entry determined pay, so strong incentives existed to ensure accurate entry. But for our shift management software, no incentives existed at all for making sure that entries were correct. For example, a correctional officer could have a 40-hour work week scheduled in the the shift software but miss the entire week due to an injury, and the software would still show them as having worked 40 hours that week. Nobody bothered to go back and correct these types of errors because there was no reason to.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 What we learned from failure\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Whatever means we used to monitor compliance with the camera policy, it couldn\u8217't be fully automated. The agency followed up this analysis with a random sampling approach, in which monitors would randomly select times of day they knew a given staff member would have to have their cameras turned on and actually watch the associated clips. This review process confirmed the first impressions from the statistical review above: most employees were making good faith attempts at complying with the policy despite technical glitches, short-staffing, and administrative confusion.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 As for the shift management software, we had to rethink a number of aspects of its implementation. In the process, leadership also came to clarify that its primary purpose was to help facilities schedule future shifts. As a result, ensuring accuracy after the fact was never something the agency would devote significant time and resources to, rendering it much less useful as a source for future data analysis.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This confirmed that proactive monitoring of correctional officers was a human process which had to come from supervisors and staff. We already had so many other checks in place it wasn\u8217't worth the effort to flag staff based on unreliable camera usage metrics or micromanage their after-the-fact shift logs.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The one piece of the analysis we did use going forward was the clip analysis, but only as a supplement for an already-launched investigation, not a prompt for one. Body-worn camera footage remained immensely useful for investigations after-the-fact, but inconsistencies in clip data in and of themselves were not particularly noteworthy red flags. At the end of the day, analytics can contextualize and enhance human judgment, but it cannot replace it.\par}
+}
