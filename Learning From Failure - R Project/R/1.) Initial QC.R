@@ -4,7 +4,8 @@ library(tidyverse)
 library(readxl)
 
 Footage_Data <- read_excel("Data/Original Data/Footage Data.xlsx", col_types = "text") %>% 
-  mutate(Duration_Hours = as.numeric(duration_seconds)/3600) %>% 
+  mutate(Duration_Hours = as.numeric(duration_seconds)/3600,
+         across(contains("record"), ~str_remove_all(.x, "-05:00"))) %>% 
   rename(Footage_Job_Type = `Employee Role`)
 
 Shift_Data <- read_excel("Data/Original Data/Shift Data.xlsx") %>% 
@@ -179,8 +180,8 @@ library(lubridate)
 Analysis_Footage <- Footage_Data %>% 
   semi_join(HR_Relevant, by = "Employee_ID") %>% 
   arrange(Employee_ID, Camera_Serial_Number, created_date_record_start) %>% 
-  mutate(Clip_Start = ymd_hms(created_date_record_start, tz = "US/Central"),
-         Clip_End = ymd_hms(date_record_end, tz = "US/Central"))
+  mutate(Clip_Start = ymd_hms(created_date_record_start),
+         Clip_End = ymd_hms(date_record_end))
 
 1-nrow(Analysis_Footage)/nrow(Footage_Data)
 1-sum(Analysis_Footage$Duration_Hours)/sum(Footage_Data$Duration_Hours)
@@ -192,8 +193,8 @@ Analysis_Footage <- Footage_Data %>%
 
 Shift_Format <- Shift_Data %>% 
   semi_join(HR_Relevant) %>%
-  mutate(Shift_Start = ymd_hms(str_c(Start_Date, " ", str_sub(Start_Time, -8, -1)), tz = "US/Central"),
-         Shift_End = ymd_hms(str_c(End_Date, " ", str_sub(End_Time, -8, -1)), tz = "US/Central"))
+  mutate(Shift_Start = ymd_hms(str_c(Start_Date, " ", str_sub(Start_Time, -8, -1))),
+         Shift_End = ymd_hms(str_c(End_Date, " ", str_sub(End_Time, -8, -1))))
 
 write_csv(Analysis_Footage, "Data/Analysis Footage.csv")
 write_csv(Shift_Format, "Data/Shift Data Formatted.csv")
