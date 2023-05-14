@@ -1,7 +1,10 @@
 ---
 title: "Learning From Failure"
 author: "Noah Wright"
-format: rtf
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
 ---
 
 ## Background
@@ -369,7 +372,7 @@ So while Employee ID is not in itself unique (i.e., one employee can have multip
 
 To reshape the data for joining, I created a function that takes any data frame with a start & end column and unfolds it into discrete units of time. Using the code below creating the "Interval_Convert" function, the shift data above for employee 9001005 converts into one entry per hour of the day per shift. As a result, two 8-hour shifts get turned into 16 Employee-Hours.
 
-``` R
+``` r
 {r}
 library(sqldf)
 library(lubridate)
