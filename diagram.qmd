@@ -1,0 +1,108 @@
+---
+title: "The analysis problem"
+author: "Noah Wright"
+format: revealjs
+---
+At a juvenile facility, each employee is equipped with a camera, and each camera is meant to be kept on throughout each 8-hour shift
+
+```{mermaid}
+flowchart TD
+  A[Facility 1] --- B(Employee 1) --> E(8 hours footage) --> H[24 hours of footage to review]
+  A[Facility 1] --- C(Employee 2) --> F(8 hours footage) --> H
+  A[Facility 1] --- D(Employee 3) --> G(8 hours footage) --> H
+```
+
+---
+
+This is replicated across all juvenile facilities for all employees for all shifts
+
+```{mermaid}
+flowchart TD
+  A[Facility 1] --- B(Employee 1) --> E(8 hours footage) --> H[24 hours of footage to review]
+  A[Facility 1] --- C(Employee 2) --> F(8 hours footage) --> H
+  A[Facility 1] --- D(Employee 3) --> G(8 hours footage) --> H
+  
+  I[Facility 2] --- J(Employee 1) --> K(8 hours footage) --> P[24 hours of footage to review]
+  I[Facility 2] --- L(Employee 2) --> M(8 hours footage) --> P
+  I[Facility 2] --- N(Employee 3) --> O(8 hours footage) --> P
+
+  Q[Facility 2] --- R(Employee 1) --> S(8 hours footage) --> X[24 hours of footage to review]
+  Q[Facility 2] --- T(Employee 2) --> U(8 hours footage) --> X
+  Q[Facility 2] --- V(Employee 3) --> W(8 hours footage) --> X
+```
+
+---
+
+As you can see from this simple example, the number of hours of recorded camera footage quickly becomes too much for any individual, or team of individuals, to manually review 
+
+```{mermaid}
+flowchart TD 
+  
+  A[Facility 1] --- B(Employee 1) --> E(8 hours footage) --> H[24 hours of footage to review] --> Y[72 hours of footage to review]
+  A[Facility 1] --- C(Employee 2) --> F(8 hours footage) --> H
+  A[Facility 1] --- D(Employee 3) --> G(8 hours footage) --> H
+
+  I[Facility 2] --- J(Employee 1) --> K(8 hours footage) --> P[24 hours of footage to review] --> Y
+  I[Facility 2] --- L(Employee 2) --> M(8 hours footage) --> P
+  I[Facility 2] --- N(Employee 3) --> O(8 hours footage) --> P
+
+  Q[Facility 2] --- R(Employee 1) --> S(8 hours footage) --> X[24 hours of footage to review] --> Y
+  Q[Facility 2] --- T(Employee 2) --> U(8 hours footage) --> X
+  Q[Facility 2] --- V(Employee 3) --> W(8 hours footage) --> X
+```
+
+---
+
+And the Texas Juvenile Justice Department had no way of automating the monitoring of footage.
+
+---
+
+So, instead we looked to identify potential <a style="color:red">red flags</a> that could be used to narrow down the "search radius." 
+
+---
+
+<a style="color:red">Red flag #1</a>
+
+**Number of clips**
+Our camera policy required correctional officers to have their cameras on at all times in the presence of youth.
+
+---
+
+However, there will of course be times during a shift -- bathroom breaks, lunch times, staff meetings -- when cameras will be switched off.
+
+```{mermaid}
+flowchart TD
+  A[Facility 1] --- B(Employee 1) --> C[Shift starts: clip #1]
+  C --- D[Coffee break]
+  D --> E[Coffee break ends: clip #2]
+  E --> F[Lunch break]
+  F --> G[Lunch break ends: clip #3]
+  G --> H[Shift ends] --> I(8 hours footage)
+```
+
+---
+
+But a correctional officer working a dorm should not be turning a camera on and off throughout the day.
+
+```{mermaid}
+flowchart TD
+  A[Facility 1] --- B(Employee 1) --> C[Shift starts: clip #1]
+  C --- D[Coffee break]
+  D --> E[Coffee break ends: clip #2]
+  E --> F[Lunch break]
+  F --> G[Lunch break ends: clip #3]
+  G --> H[Shift ends] --> I(7 hours footage)
+  
+  A[Facility 1] --- BB(Employee 2) --> CC[Shift starts: clip #1]
+  CC --- DD[Coffee break]
+  DD --> EE[Coffee break ends: clip #2]
+  EE --> FF[???]
+  FF --> GG[clip #3]
+  GG --> HH[???]
+  HH --> II[clip #4]
+  II --> JJ[Lunch break]
+  JJ --> KK[Lunch break ends: clip #5]
+  KK --> LL[???]
+  LL --> MM[clip #6]
+  MM --> NN[Shift ends] --> OO(5 hours footage)
+```
