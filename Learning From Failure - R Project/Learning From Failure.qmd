@@ -1,48 +1,80 @@
 ---
 title: "Learning From Failure"
+description: |
+  To add.
+categories:
+  - To
+  - add
 author: "Noah Wright"
+date: last-modified
+date-format: long
 toc: true
-format: 
-#docx
+format:
   html:
+    theme: [lux, rwds.scss]
+    css: rwds.css
+    toc: true
+    grid:
+      sidebar-width: 0px
+      body-width: 1000px
+      margin-width: 250px
+    code-annotations: below
     code-fold: true
     code-summary: "Show the code"
     embed-resources: true
+# execute:
+#   eval: false
+#   echo: true
+#   messages: false
+#   error: false
+#   warning: false
+page-layout: article
+title-block-banner: true
 ---
 
-## Abstract
+Incarcerated youth are an exceptionally vulnerable population, and body-worn cameras are an important tool of accountability both for those incarcerated and the staff who supervise them. In 2018 the Texas Juvenile Justice Department (TJJD) deployed body-worn cameras for the first time, and this is a case study of how the agency developed a methodology for measuring the success of the camera rollout. This is also a case study of analysis failure, as it became clear that real-world implementation problems were corrupting the data and rendering the methodology unusable. However, the process of working through the causes of this failure helped the agency identify previously unrecognized problems and ultimately proved to be of great benefit. The purpose of this case study is to demonstrate how negative findings can still be incredibly useful in real-world settings.
 
-Incarcerated youth are an exceptionally vulnerable population, and body-worn cameras are an important tool of accountability for both incarcerated youth and the staff that supervise them. In 2018 the Texas Juvenile Justice Department deployed body-worn cameras for the first time, and this is a case study of how the agency developed a methodology for measuring the success of the camera rollout. This is also a case study of analysis failure, as it became clear that real-world implementation problems were corrupting the data and rendering the methodology unusable. However, the process of working through the causes of this failure helped the agency identify previously unrecognized problems and ultimately proved to be of great benefit. The purpose of this case study is to demonstrate how negative findings can still be incredibly useful in real-world settings.
+::: {.callout-note appearance="simple" collapse="true" style="margin:0"}
+## Why body-worn cameras?
+
+Body-worn cameras became a standard tool of policing in the US in the mid-2010s. By recording officer interactions with the public, law enforcement agencies could achieve a greater degree of accountability. Not only could credible claims of police abuse against civilians be easily verified, the argument went, but false accusations would decline as well, saving police forces time and resources that would otherwise be wasted on spurious allegations. Initial studies seemed to support this argument.
+
+TJJD faced similar issues to police forces, and body-worn cameras seemed like they could be a useful tool. Secure youth residential facilities in Texas all had overhead cameras, but these were very old (they still ran on tape) and captured no audio. This presented a number of problems when it came to deciphering contested incidents, not to mention that these cameras had clearly not prevented any of the agency's prior scandals from taking place. TJJD received special funding from the legislature to roll out body-worn cameras system-wide, and all juvenile correctional officers were required to wear one.
+:::
 
 ## Background
 
-::: column-page-inset
-### Why Body-worn Cameras?
+From the outset of the rollout of body-worn cameras, TJJD faced a major issue with implementation: in 2019, body worn cameras were an established tool for law enforcement, but there was very little literature or best practice to draw from for their use in a correctional environment. Unlike police officers, juvenile correctional officers (JCOs) deal directly with their charges for virtually their entire shift. In an 8-hour shift, a police officer might record a few calls and traffic stops. A juvenile correctional officer, on the other hand, would record for almost 8 consecutive hours. And, because TJJD recorded round-the-clock for hundreds of employees at a time, this added up very quickly to *a lot* of footage.
 
-Body-worn cameras became a standard tool of policing in the mid-2010s. By recording officer interactions with the public, law enforcement agencies could achieve a greater degree of accountability. Not only could credible claims of police abuse against civilians be easily verified, the argument went, but false accusations would decline as well, saving the agency time and resources that would otherwise be wasted on spurious allegations. Initial studies seemed to support this argument, and by the end of the decade it became common practice in the United States for police to have these devices.
+For example, a typical dorm in a correctional center might have four JCOs assigned to it. Across a single week, these four JCOs would be expected to record at least 160 hours of footage.
 
-The Texas Juvenile Justice Department faced similar issues, and body-worn cameras seemed like they could be a useful tool. Secure youth residential facilities in Texas all had overhead cameras, but these were very old (they still ran on tape) and captured no audio. This presented a number of problems when it came to deciphering contested incidents, not to mention that these cameras had clearly not prevented any of the agency's prior scandals from taking place. TJJD received special funding from the legislature to roll out body-worn cameras system-wide, and all juvenile correctional officers were required to wear one.
+![](images/jcos-recording-totals.png){fig-align="center"} 
+
+::: {.figure-caption style="text-align: center;"} 
+**Figure 1:** 4 JCOs x 40 hours per week = 160 hours of footage. 
 :::
-
-The presence of body-worn cameras would, in theory, provide a strong behavioral incentive to both TJJD staff and youth alike, as well as provide evidence that could expedite any investigations of wrongdoing. But from the outset, the agency faced a major issue with implementation: In 2019, body worn cameras were mostly a tool for law enforcement. There was very little literature or best practice to draw from for their use in a correctional environment. Unlike police officers, juvenile correctional officers deal directly with their charges for virtually their entire shift. In an 8-hour shift, a police officer might record a few calls and traffic stops. A juvenile correctional officer, on the other hand, would record 8 consecutive hours. And because TJJD recorded round-the-clock for hundreds of employees at a time, this added up very quickly.
-
-A typical dorm might have four JCOs assigned to it. Across a single week, these four JCO's would be expected to record at least 160 hours of footage.
-
-![*4 JCOs x 40 hours per week = **160 hours of footage***](Diagrams/JCOs%20Recording%20Totals.png){fig-align="center"}
 
 This was replicated across every dorm. Three dorms, for example, would produce nearly 500 hours of footage, as seen below.
 
-![*3 dorms x 4 JCOs x 40 hours per week = **480 hours of footage***](Diagrams/JCOs%20Recording%20Totals%20Across%20Dorms.png){fig-align="left"}
+![](images/jcos-recording-totals-across-dorms.png)
 
-Finally, we had more than one facility. Four facilities with 3 dorms each would produce nearly 2,000 hours of footage every wekek.
+::: {.figure-caption style="text-align: center;"}
+**Figure 2:** 3 dorms x 4 JCOs x 40 hours per week = 480 hours of footage.
+:::
 
-![4 facilities x 3 dorms x 4 JCOs x 40 hours per week = **1,960 hours of footage**](Diagrams/JCOs%20Recording%20Totals%20Across%20Facilities.png){fig-align="center"}
+Finally, we had more than one facility. Four facilities with 3 dorms each would produce nearly 2,000 hours of footage every week.
 
-In actuality, we had a total of 5 facilities each with over a dozen dorms producing an anticipated **17,000 hours** of footage every week. To put this into perspective, a week only has 168 hours. That meant the facilities produced 100 hours of footage per hour of the day every week, an impossible amount to monitor manually.
+![](images/jcos-recording-totals-across-facilities.png){fig-align="center"}
 
-As a result, footage review had to be done in a limited, reactive manner. If our monitoring team received an incident report they could easily zero in on the cameras of the officers involved and review the incident accordingly. But our executive team had hoped to be able to use the footage proactively, looking for 'red flags' in order to *prevent* potential abuses instead of only responding to allegations.
+::: {.figure-caption style="text-align: center;"}
+**Figure 3:** 4 facilities x 3 dorms x 4 JCOs x 40 hours per week = 1,960 hours of footage.
+:::
 
-Because the agency had no way of automating the monitoring of footage, any proactive analysis had to be metadata-based. But what to look for in the metadata? Once again, the lack of best-practice literature left us in the lurch. So, we brainstormed ideas for 'red flags' and came up with the following that could be screened for using camera metadata:
+In actuality, we had a total of 5 facilities each with over a dozen dorms producing an anticipated **17,000 hours** of footage every week -- an impossible amount to monitor manually.
+
+As a result, footage review had to be done in a limited, reactive manner. If our monitoring team received an incident report, they could easily zero in on the cameras of the officers involved and review the incident accordingly. But our executive team had hoped to be able to use the footage proactively, looking for "red flags" in order to *prevent* potential abuses instead of only responding to allegations.
+
+Because the agency had no way of automating the monitoring of footage, any proactive analysis had to be metadata-based. But what to look for in the metadata? Once again, the lack of best-practice literature left us in the lurch. So, we brainstormed ideas for "red flags" and came up with the following that could be screened for using camera metadata:
 
 1.  **Minimal quantity of footage** -- our camera policy required correctional officers to have their cameras on at all times in the presence of youth. No footage meant they weren't using their cameras.
 
@@ -50,28 +82,26 @@ Because the agency had no way of automating the monitoring of footage, any proac
 
 3.  **Large gaps between clips** -- It defeats the purpose of having cameras if they're not turned on.
 
-    In addition, we came up with a fourth red flag that could be screened for using camera metadata compared with shift-tracking metadata:
+In addition, we came up with a fourth red flag, which could be screened for by comparing camera metadata with shift-tracking metadata:
 
-4.  **Mismatch between clips recorded and shifts worked** ­-- the agency had very recently rolled out a new shift tracking software. We should expect to see the hours logged by the body cameras roughly match the hours logged as shifts worked.
+4.  **Mismatch between clips recorded and shifts worked** -- the agency had very recently rolled out a new shift tracking software. We should expect to see the hours logged by the body cameras roughly match the shift hours worked.
 
-## Analysis Part 1 -- QC and Footage Analysis
+## Analysis, part 1 -- Quality control and footage analysis
 
-For this analysis, I gathered the most recent three weeks of body-worn camera data, which, at the time, covered April 1--21, 2019. I also pulled data from Shifthound (our shift management software) covering the same time period. Finally, I gathered HR data from CAPPS, the system that most of the State of Texas used at the time for personnel management and finance.[^1] I then performed some quality control work, summarized in the inset below.
+For this analysis, I gathered the most recent three weeks of body-worn camera data, which, at the time, covered April 1--21, 2019. I also pulled data from Shifthound (our shift management software) covering the same time period. Finally, I gathered HR data from CAPPS, the system that most of the State of Texas used at the time for personnel management and finance.^[The underlying data for the analysis as presented in this article was requested through the Texas Public Information Act and went through TJJD's approval process for ensuring anonymity of records. It is available on GitHub along with the rest of the code used to write this article.] I then performed some quality control work, summarized in the drop-down box below.
 
-[^1]: The underlying data for the analysis as presented in this article was requested through the Texas Public Information Act and went through TJJD's approval process for ensuring anonymity of records. It is available on GitHub along with the rest of the code used to write this article.
+::: {.callout-note appearance="simple" collapse="true"}
+## Initial quality control steps
 
-::: column-page-inset
-### Initial Quality Control Steps
+`SkimR` is a helpful `R` package for exploratory analysis that gives summary statistics for every variable in a data frame, including missing values. After using the `skim` function on clip data, shift data, and HR data, I noticed that the clip data had some missing values for employee ID. This was an error which pointed to data entry mistakes -- body-worn cameras do not record footage on their own, after all, so employee IDs should be assigned to each clip.
 
-SkimR is a helpful package for exploratory analysis that gives summary statistics for every variable in a data frame, including missing values. After using the skim function on clip data, shift data, and HR data, I noticed that the Clip data had missing values for employee ID. This was an error (body-worn cameras do not record footage on their own) that indicated data entry mistakes.
+From here I compared the employee ID field in the clip data to the employee ID field in the HR data. Somewhat surprisingly, IDs existed in the clip data that did not correspond to any entries in the HR data, indicating yet more data entry mistakes -- the HR data is the ground truth for all employee IDs. I checked the shift data for the same error -- employee IDs that did not exist in the HR data -- and found the same problem.
 
-From here I compared the employee ID field in the clip data to the employee ID field in the HR data. IDs existed in the clip data that did not correspond to any entries in the HR data, indicating more erroneous entries like the missing values. The HR data is the single source of truth for employee IDs as it is literally where they all come from. I checked the shift data for the same error - employee IDs that did not exist in the HR data - and found it. Data entry issues clearly existed for the shift data as well.
-
-In addition to employee ID's that did not exist in the HR data, I also looked for employee ID's that existed in the HR data but for staff who were not actually employed between April 1 -- 21, 2019. These also indicated clear errors: staff cannot use a body-worn camera or log a shift if they have yet to begin working or if they have been terminated (system permissions are revoked upon leaving employment).
+As well as employee IDs that did not exist in the HR data, I also looked for  employee IDs in the footage and shift data which related to staff who were not actually employed between April 1--21, 2019. I found some examples of this, which indicated yet more errors: staff cannot use a body-worn camera or log a shift if they have yet to begin working or if they have been terminated (system permissions are revoked upon leaving employment).
 
 I made a list of every erroneous ID to pass off to HR and monitoring staff before excluding them from the subsequent analysis. In total, 10.6% of clips representing 11.3% of total footage had to be excluded due to these initial data quality issues, foreshadowing the subsequent data quality issues the analysis would eventually uncover.
 
-The full script [can be found on GitHub here.](https://t.ly/BUNRZ)
+The full analysis script [can be found on GitHub](https://t.ly/BUNRZ).
 :::
 
 In order to operationalize our brainstorming session, I needed to see what exactly the cameras captured in their metadata. The variables most relevant to our purposes were:
