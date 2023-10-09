@@ -40,9 +40,9 @@ Incarcerated youth are an exceptionally vulnerable population, and body-worn cam
 ::: {.callout-note appearance="simple" collapse="true" style="margin:0"}
 ## Why body-worn cameras?
 
-Body-worn cameras became a standard tool of policing in the US in the mid-2010s. By recording officer interactions with the public, law enforcement agencies could achieve a greater degree of accountability. Not only could credible claims of police abuse against civilians be easily verified, the argument went, but false accusations would decline as well, saving police forces time and resources that would otherwise be wasted on spurious allegations. Initial studies seemed to support this argument.
+Body-worn cameras became a standard tool of policing in the US in the mid-2010s. By recording officer interactions with the public, law enforcement agencies could achieve a greater degree of accountability. Not only could credible claims of police abuse against civilians be easily verified, the argument went, but false accusations would decline as well, saving law enforcement agencies time and resources that would otherwise be wasted on spurious allegations. Initial studies seemed to support this argument.
 
-TJJD faced similar issues to police forces, and body-worn cameras seemed like they could be a useful tool. Secure youth residential facilities in Texas all had overhead cameras, but these were very old (they still ran on tape) and captured no audio. This presented a number of problems when it came to deciphering contested incidents, not to mention that these cameras had clearly not prevented any of the agency's prior scandals from taking place. TJJD received special funding from the legislature to roll out body-worn cameras system-wide, and all juvenile correctional officers were required to wear one.
+TJJD faced similar issues to law enforcement agencies, and body-worn cameras seemed like they could be a useful tool. Secure youth residential facilities in Texas all had overhead cameras, but these were very old (they still ran on tape) and captured no audio. This presented a number of problems when it came to deciphering contested incidents, not to mention that these cameras had clearly not prevented any of the agency's prior scandals from taking place. TJJD received special funding from the legislature to roll out body-worn cameras system-wide, and all juvenile correctional officers were required to wear one.
 :::
 
 ## Background
@@ -163,22 +163,6 @@ Footage_Metrics_by_Employee %>%
 By eyeballing the distributions I could tell most staff were recording fewer than 10 clips per day, shooting about 0.5--2 hours for each clip, for a total of 2--10 hours of daily footage, with the majority of employees having less than one significant gap per day. Superficially, this appeared to provide evidence of widespread attempts at complying with the body-worn camera policy and no systemic rejection or resistance. If this were indeed the case, then we could turn our attention to individual outliers.
 
 First, though, we thought we would attempt to validate this initial impression by testing another assumption. If each employee works on average 40 hours per week -- a substantial underestimate given how common overtime was -- we should expect, over a three-week period, to see about 120 hours of footage per employee in the dataset. This is *not* what we found.
-
-```{r, message = FALSE, eval=FALSE}
-
-Percent_Display <- function(x) {
-  str_c(100 * round(x, 3), "%")
-}
-
-Total_Footage <- sum(Footage_Metrics_by_Employee$Footage_Hours)
-Total_Employees <- nrow(Footage_Metrics_by_Employee)
-Average_per_Employee <- round((Total_Footage/Total_Employees),1)
-
-print(str_c("Average Footage per Employee - ", Average_per_Employee, " hours"))
-
-print(str_c(Average_per_Employee, " footage hours / 120 expected work hours = ", 100*Average_per_Employee/120, "% of average shift recorded"))
-
-```
 
 Average footage per employee was 70.2 hours over the three-week period, meaning that the average employee was recording less than 60% of shift hours worked. With so many hours going unrecorded for unknown reasons, we needed to investigate further.
 
