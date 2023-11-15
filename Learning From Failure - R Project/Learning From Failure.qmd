@@ -21,16 +21,8 @@ format:
       sidebar-width: 0px
       body-width: 1000px
       margin-width: 250px
-    code-annotations: below
     code-fold: true
-    code-summary: "Show the code"
     embed-resources: true
-# execute:
-#   eval: false
-#   echo: true
-#   messages: false
-#   error: false
-#   warning: false
 page-layout: article
 title-block-banner: true
 ---
@@ -143,7 +135,7 @@ I used these aggregations to devise the following **staff metrics**:
 
 Once I established these metrics for each employee I looked at their respective distributions. Standard staff shift lengths at the time were eight hours. If staff were using their cameras appropriately, we would expect to see distributions centered around clip lengths of about an hour, eight or fewer clips per day, and 8-12 footage hours per day. We would also expect to see 0 large gaps.
 
-```{r, message = FALSE, eval=FALSE}
+```{r, message = FALSE}
 
 library(tidyverse)
 
@@ -157,8 +149,6 @@ Footage_Metrics_by_Employee %>%
   facet_wrap(~Metric, scales = "free")
 
 ```
-
-![](images/fig-1.png){fig-align="center"}
 
 By eyeballing the distributions I could tell most staff were recording fewer than 10 clips per day, shooting about 0.5--2 hours for each clip, for a total of 2--10 hours of daily footage, with the majority of employees having less than one significant gap per day. Superficially, this appeared to provide evidence of widespread attempts at complying with the body-worn camera policy and no systemic rejection or resistance. If this were indeed the case, then we could turn our attention to individual outliers.
 
@@ -176,7 +166,7 @@ In order to join the shift data to the camera data, I needed a common unit of an
 
 For example, let's take employee #9001005 at Facility Epsilon between April 1--3. This employee has the following clips recorded during that time period:
 
-```{r, message = FALSE, echo = FALSE, eval=FALSE}
+```{r, message = FALSE, echo = FALSE}
 
 Sample_Clips <- read_csv("Output/Footage Sample.csv")
 
@@ -185,19 +175,9 @@ Sample_Clips %>%
 
 ```
 
-| Employee_ID | Clip_ID | Clip_Start          | Clip_End            |
-|:------------|:--------|:--------------------|:--------------------|
-| 9001005     | 156421  | 2019-04-01 05:54:34 | 2019-04-01 08:34:34 |
-| 9001005     | 155093  | 2019-04-01 08:40:59 | 2019-04-01 08:54:51 |
-| 9001005     | 151419  | 2019-04-01 09:03:16 | 2019-04-01 11:00:30 |
-| 9001005     | 153133  | 2019-04-01 11:10:09 | 2019-04-01 12:39:51 |
-| 9001005     | 151088  | 2019-04-01 12:57:51 | 2019-04-01 14:06:44 |
-| 9001005     | 150947  | 2019-04-02 05:56:34 | 2019-04-02 09:48:50 |
-| 9001005     | 151699  | 2019-04-02 09:54:23 | 2019-04-02 12:17:15 |
-
 We can join this to a similar table of shifts logged. This particular employee had the following shifts scheduled from April 1--3:
 
-```{r, message = FALSE, echo = FALSE, eval=FALSE}
+```{r, message = FALSE, echo = FALSE}
 
 library(lubridate)
 
@@ -208,16 +188,11 @@ Sample_Shifts %>%
 
 ```
 
-| Employee_ID | Shift_ID | Shift_Start         | Shift_End           |
-|:------------|:---------|:--------------------|:--------------------|
-| 9001005     | E050603  | 2019-04-01 06:00:00 | 2019-04-01 14:00:00 |
-| 9001005     | E051303  | 2019-04-02 06:00:00 | 2019-04-02 14:00:00 |
-
 The table shows two eight-hour morning shifts from 6:00 am to 2:00 pm. We can join the two tables together by ID on a messy many-to-many join, but that tells us nothing about how much they overlap (or fail to overlap) without extensive additional work. For example, we have a unique identifier for employee clip (Clip_ID) and employee shift (Shift_ID), but what we need is a unique identifier that can be used to join the two. Fortunately, for this particular data we can *create* a unique identifier since both clips and shifts are fundamentally measures of *time*. While Employee_ID is not in itself unique (i.e., one employee can have multiple clips attached to that ID), Employee_ID combined with time of day is unique. A person can only be in one place at a time, after all!
 
 To reshape the data for joining, I created a function that takes any data frame with a start and end column and unfolds it into discrete units of time. Using the code below to create the "Interval_Convert" function, the shift data above for employee 9001005 converts into one entry per hour of the day per shift. As a result, two eight-hour shifts get turned into 16 employee hours (a sample of which is shown below).
 
-```{r, message = FALSE, eval=FALSE}
+```{r, message = FALSE}
 library(sqldf)
 library(lubridate)
 
@@ -253,7 +228,7 @@ browser()
 }
 ```
 
-```{r, echo = FALSE, message = FALSE, eval=FALSE}
+```{r, echo = FALSE, message = FALSE}
 source("R/Interval Convert.R")
 
 Interval_Convert(Sample_Shifts, Shift_Start, Shift_End, "hour") %>% 
@@ -261,17 +236,9 @@ Interval_Convert(Sample_Shifts, Shift_Start, Shift_End, "hour") %>%
   knitr::kable(align = 'l')
 ```
 
-| Interval_Start      | Interval_End        | Employee_ID | Shift_ID | Shift_Start         | Shift_End           | Seconds_Duration_Within_Interval |
-|:------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------|:----------------------------------------------------------------------------------|:----------------------------------------------------------|:----------------------------------------------------------------------|:-----------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 2019-04-01 06:00:00 | 2019-04-01 07:00:00 | 9001005     | E050603  | 2019-04-01 06:00:00 | 2019-04-01 14:00:00 | 3600 secs                        |
-| 2019-04-01 07:00:00 | 2019-04-01 08:00:00 | 9001005     | E050603  | 2019-04-01 06:00:00 | 2019-04-01 14:00:00 | 3600 secs                        |
-| 2019-04-01 08:00:00 | 2019-04-01 09:00:00 | 9001005     | E050603  | 2019-04-01 06:00:00 | 2019-04-01 14:00:00 | 3600 secs                        |
-| 2019-04-01 09:00:00 | 2019-04-01 10:00:00 | 9001005     | E050603  | 2019-04-01 06:00:00 | 2019-04-01 14:00:00 | 3600 secs                        |
-| ...                 | ...                 | ...         | ...      | ...                 | ...                 | ...                              |
-
 The footage could be converted in a similar manner, and in this way I could break down both the shift data and the clip data into an hour-by-hour view and compare them to one another. Using this new format, I joined together the full tables of footage and shifts to determine how much footage was recorded with no corresponding shift in the timekeeping system, and vice-versa.
 
-```{r, message = FALSE, echo = FALSE, eval=FALSE}
+```{r, message = FALSE, echo = FALSE}
 
 Mismatch_Statistics <- read_csv("Output/Footage-Shift Mismatch Summary Statistics.csv")
 
@@ -280,30 +247,14 @@ Mismatch_Statistics %>%
   knitr::kable(align = 'l')
 ```
 
-| HR_Location | Footage_Hours_No_Shift | Employee_IDs_With_Missing_Shift |
-|:------------|:-----------------------|:--------------------------------|
-| Alpha       | 1805                   | 122                             |
-| Beta        | 3749                   | 114                             |
-| Delta       | 1208                   | 133                             |
-| Epsilon     | 2899                   | 157                             |
-| Gamma       | 4153                   | 170                             |
-
 To summarize what the table is telling us: Almost every employee has footage hours that do not match with logged shifts, totaling nearly 14,000 hours when you add up the Footage_Hours_No_Shift column. But what about the opposite case? How many shift hours were logged with no corresponding footage?
 
-```{r, message = FALSE, echo = FALSE, eval=FALSE}
+```{r, message = FALSE, echo = FALSE}
 
 Mismatch_Statistics %>% 
   select(HR_Location, Shift_Hours_No_Footage, Employee_IDs_With_Missing_Footage) %>% 
   knitr::kable(align = 'l')
 ```
-
-| HR_Location | Shift_Hours_No_Footage | Employee_IDs_With_Missing_Footage |
-|:------------|:-----------------------|:----------------------------------|
-| Alpha       | 7338                   | 127                               |
-| Beta        | 6014                   | 118                               |
-| Delta       | 12830                  | 141                               |
-| Epsilon     | 9000                   | 168                               |
-| Gamma       | 11960                  | 183                               |
 
 Oh dear. Again, almost every employee has logged shift hours with no footage: 47,000 hours in total. To put it another way, that's an entire work week per employee not showing up in camera footage.
 
@@ -311,14 +262,13 @@ At this point, we could probably rule out deliberate noncompliance. The clip dat
 
 One way to check for deliberate noncompliance would be to first exclude shifts that contain zero footage whatsoever. This would rule out total mismatches, where -- for whatever reason -- the logged shifts had totally failed to overlap with recorded clips. For the remaining shifts that *do* contain footage, we could look at the proportion of the shift covered by footage. So, if an eight-hour shift had four hours of recorded footage associated with it, then we could say that 50% of the shift had been recorded. The following histogram is a distribution of the number of employees organized by the percent of their shift-hours they recorded (but only shifts that had a nonzero amount of footage).
 
-```{r, message = FALSE, echo = FALSE, eval=FALSE}
+```{r, message = FALSE, echo = FALSE}
 All_Employee_Metrics <- read_csv("Output/All Employee Metrics.csv")
 
 All_Employee_Metrics %>%
   ggplot(aes(Average_Percent_of_Other_Shifts_Recorded)) +
   geom_histogram()
 ```
-![](images/fig-2.png){fig-align="center"}
 
 As it turned out, most employees recorded the majority of their matching shifts, a finding that roughly aligns with the initial clip analysis. So, what explains the 14,000 hours of footage with no shifts, and the 47,000 of shifts with no footage?
 
